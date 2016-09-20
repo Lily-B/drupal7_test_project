@@ -1,0 +1,9 @@
+core = "7.x"
+description = "An example module that require d7 module."
+name = "d7_alter_name"
+package = Custom Modules
+
+dependencies[] = d7
+
+; NEW LINE
+configure = admin/config/content/d7_alter_name

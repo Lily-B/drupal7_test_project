@@ -1,0 +1,12 @@
+<?php
+/**
+ * Implements hook_form_alter
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function d7_alter_name_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'd7_form'){
+    $form['name']['#title'] = t('First Name');
+  }
+}

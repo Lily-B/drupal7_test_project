@@ -1,0 +1,109 @@
+<?php
+/**
+ * Implement hook_menu().
+ */
+function d7_menu() {
+  $items = array();
+
+  $items['d7/d7form'] = array( //this creates a URL that will call this form at "d7/d7form"
+    'title' => 'News subscription',
+    //page title
+    'description' => 'A form to mess around with.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('d7_form'),
+//    'access callback' => TRUE,
+    'access arguments' => array('access d7 content'),
+
+  );
+
+  return $items;
+}
+
+/**
+ * Custom sub.
+ */
+function d7_form($form, &$form_state) {
+
+  $form['name'] = array(
+    '#title' => t('Name'),
+    '#type' => 'textfield',
+    '#default_value' => t('Your name'),
+    '#size' => 20,
+    '#maxlength' => 20,
+  );
+
+  $form['email'] = array(
+    '#title' => t('E-mail'),
+    '#type' => 'textfield',
+  );
+
+  $form['agree'] = array(
+    '#title' => t('I agree with all this stuff.'),
+    '#type' => 'checkbox',
+    '#default_value' => FALSE,
+  );
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit!'),
+  );
+
+  return $form;
+}
+
+/**
+ * Does not ! Implement hook_form_validate().
+ */
+function d7_form_validate($form, &$form_state) {
+
+  $name = $form_state['values']['name'];
+  if (!($name)) {
+    form_set_error('name', t('Please enter your name.'));
+  }
+  elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+    form_set_error('name', t('Only letters and white space allowed in Your Name.'));
+  }
+
+  $email = $form_state['values']['email'];
+  if (!($email)) {
+    form_set_error('email', t('Please enter your e-mail.'));
+  }
+  elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    form_set_error('email', t('Invalid email format.'));
+  }
+
+  $agree = $form_state['values']['agree'];
+  if (!($agree)) {
+    form_set_error('agree', t('If you agree, select Yes.'));
+  }
+}
+
+/**
+ * Implement hook_form_submit().
+ */
+function d7_form_submit($form, &$form_state) {
+//  $form_state['rebuild'] = TRUE;
+
+  drupal_set_message(t('Success!'));
+}
+
+/**
+ * Implements hook_permission().
+ */
+function d7_permission() {
+  return array(
+    'access d7 content' => array(
+      'title' => t('Access content for the D7 module'),
+    )
+  );
+}
+
+/**
+ * Custom callback function
+ * @param $form
+ * @return array|mixed
+ */
+function d7_subscription_callback($form) {
+  return  drupal_get_form($form);
+}
+

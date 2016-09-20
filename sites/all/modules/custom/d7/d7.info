@@ -1,0 +1,7 @@
+core = "7.x"
+description = "An example module used to learn module development and forms creation."
+name = "d7 custom form"
+package = Custom Modules
+
+; NEW LINE
+configure = admin/config/content/d7
