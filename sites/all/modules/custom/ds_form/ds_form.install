@@ -1,0 +1,38 @@
+<?php
+/**
+ * Implements hook_schema
+ */
+function ds_form_schema() {
+  $schema['ds_form_news_subscriptions'] = array(
+    'description' => 'Table for subscribed users',
+    'fields' => array(
+      'id' => array(
+        'description' => "Subscribed user's ID",
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'first_name' => array(
+        'description' => "Subscribed user's first name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'last_name' => array(
+        'description' => "Subscribed user's last name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'email' => array(
+        'description' => "Subscribed user's email",
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+      ),
+    ),
+    'unique keys' => array(
+      'email' => array('email')),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}

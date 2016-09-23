@@ -1,4 +1,6 @@
 <?php
+
+module_load_include('inc', 'd7', 'includes/custom_fapi_validation_rules');
 /**
  * Implement hook_menu().
  */
@@ -7,13 +9,10 @@ function d7_menu() {
 
   $items['d7/d7form'] = array( //this creates a URL that will call this form at "d7/d7form"
     'title' => 'News subscription',
-    //page title
     'description' => 'A form to mess around with.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('d7_form'),
-//    'access callback' => TRUE,
+    'page callback' => 'd7_subscription_callback',
+    'page arguments' => array('d7_subscription_form'),
     'access arguments' => array('access d7 content'),
-
   );
 
   return $items;
@@ -22,7 +21,7 @@ function d7_menu() {
 /**
  * Custom sub.
  */
-function d7_form($form, &$form_state) {
+function d7_subscription_form($form, &$form_state) {
 
   $form['name'] = array(
     '#title' => t('Name'),
@@ -30,17 +29,37 @@ function d7_form($form, &$form_state) {
     '#default_value' => t('Your name'),
     '#size' => 20,
     '#maxlength' => 20,
+    '#required' => TRUE,
+    '#rules' => array(
+      'alpha_space',
+      array(
+        'rule' => 'length[1,20]',
+        'error' => t('Please, enter a shorter than 20 char name.')
+      )
+    ),
   );
 
   $form['email'] = array(
     '#title' => t('E-mail'),
     '#type' => 'textfield',
+    '#required' => TRUE,
+    '#rules' => array(
+      array(
+        'rule' => 'email',
+        'error' => t('Please, enter a valid email at %field.')
+      ),
+      array(
+        'rule' => 'length[3,30]',
+        'error' => t('Please, enter a shorter than 30 char email.')
+      )
+    ),
   );
 
   $form['agree'] = array(
     '#title' => t('I agree with all this stuff.'),
     '#type' => 'checkbox',
     '#default_value' => FALSE,
+    '#required' => TRUE,
   );
 
   $form['submit_button'] = array(
@@ -52,39 +71,11 @@ function d7_form($form, &$form_state) {
 }
 
 /**
- * Does not ! Implement hook_form_validate().
- */
-function d7_form_validate($form, &$form_state) {
-
-  $name = $form_state['values']['name'];
-  if (!($name)) {
-    form_set_error('name', t('Please enter your name.'));
-  }
-  elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-    form_set_error('name', t('Only letters and white space allowed in Your Name.'));
-  }
-
-  $email = $form_state['values']['email'];
-  if (!($email)) {
-    form_set_error('email', t('Please enter your e-mail.'));
-  }
-  elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    form_set_error('email', t('Invalid email format.'));
-  }
-
-  $agree = $form_state['values']['agree'];
-  if (!($agree)) {
-    form_set_error('agree', t('If you agree, select Yes.'));
-  }
-}
-
-/**
  * Implement hook_form_submit().
  */
-function d7_form_submit($form, &$form_state) {
-//  $form_state['rebuild'] = TRUE;
+function d7_subscription_form_submit($form, &$form_state) {
 
-  drupal_set_message(t('Success!'));
+  drupal_set_message(t('Hello!'));
 }
 
 /**
@@ -104,6 +95,8 @@ function d7_permission() {
  * @return array|mixed
  */
 function d7_subscription_callback($form) {
-  return  drupal_get_form($form);
+  return drupal_get_form($form);
 }
+
+
 

@@ -4,6 +4,7 @@ name = "d7_alter_name"
 package = Custom Modules
 
 dependencies[] = d7
+dependencies[] = schema
 
 ; NEW LINE
 configure = admin/config/content/d7_alter_name

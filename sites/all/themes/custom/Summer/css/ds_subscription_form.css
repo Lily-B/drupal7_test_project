@@ -1,0 +1,76 @@
+#ds-form-subscription-form {
+
+    color: #ffffff;
+    background-color: #24323d;
+    display: inline-block;
+    width: 385px;
+    height: auto;
+    border-radius: 4px;
+    margin: 8px 30px;
+    padding: 2%;
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
+}
+
+#ds-form-subscription-form div.form-item{
+    margin:0;
+}
+
+#ds-form-subscription-form label {
+    display: none;
+}
+
+#ds-form-subscription-form input {
+    background-color: inherit;
+    color: #ffffff;
+    border: 1px solid #798790;
+    border-radius: 0;
+    margin: 17px 0;
+    display: inline-block;
+    width: 363px;
+    height: 15px;
+    padding: 10px;
+}
+
+#ds_form_names div {
+    display: inline-block;
+    width: 190px;
+    margin: 0;
+    padding: 0;
+}
+
+#ds_form_names input {
+    display: inline-block;
+    width: 168px;
+    background-color: inherit;
+    border: 1px solid #798790;
+    border-radius: 0;
+}
+
+#ds-form-subscription-form #edit-last-name {
+    margin-left: 2px;
+    display: inline-block;
+    /*float: right;*/
+}
+
+#ds-form-subscription-form input[type="submit"] {
+    border: none;
+    background-image: none;
+    background-color: #1ab188;
+    border-radius: 0;
+    height: 60px;
+    width: 100%;
+    color: #ffffff;
+    font-size: 24px;
+    font-family: "Ubuntu Mono", SansSerif, sans-serif;
+}
+
+#ds_form_title {
+    font-family: SansSerif, sans-serif;
+    color: #ffffff;
+    font-size: 40px;
+    text-align: center;
+    /*margin-top: 25px;*/
+    /*margin-bottom: 5px;*/
+}

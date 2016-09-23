@@ -1,0 +1,32 @@
+<?php
+/**
+ * Implements hook_schema
+ */
+function d7_alter_name_schema() {
+  $schema['d7_news_subscriptions'] = array(
+    'description' => 'Table for subscribed users',
+    'fields' => array(
+      'id' => array(
+        'description' => "Subscribed user's ID",
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => "Subscribed user's name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'email' => array(
+        'description' => "Subscribed user's email",
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+      ),
+    ),
+    'unique keys' => array(
+      'email' => array('email')),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}

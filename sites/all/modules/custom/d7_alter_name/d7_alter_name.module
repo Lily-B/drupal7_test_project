@@ -6,7 +6,54 @@
  * @param $form_id
  */
 function d7_alter_name_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'd7_form'){
+  if ($form_id == 'd7_subscription_form') {
     $form['name']['#title'] = t('First Name');
+    $form['#validate'][] = 'is_unique_validate';
+    $form['#submit'] = array('alter_form_submit');
+//If you need to add your submit functionality after d7_subscription_form_submit functions:
+//    $form['#submit'][] = 'd7_alter_name_d7_subscription_form_submit';
+//and you should rename the function alter_form_submit according to line above.
   }
 }
+
+/**
+ * Validate form
+ *
+ */
+function is_unique_validate($form, &$form_state) {
+  $new_email = $form_state['values']['email'];
+  if (!(db_table_exists('d7_news_subscriptions'))) {
+    //create table or show message
+    drupal_set_message(t('DB error occurred.'), 'error');
+
+  }
+  else {
+    $row_exists = db_select('d7_news_subscriptions', 'u')
+      ->fields('u', array('name'))
+      ->condition('u.email', $new_email)
+      ->execute()
+      ->fetchField();
+    if ($row_exists) {
+      form_set_error('email', t('User with this e-mail has already subscribed.'));
+    }
+    return TRUE;
+  }
+}
+
+/**
+ * Rewrites d7_subscription_form_submit
+ * @param $form
+ * @param $form_state
+ */
+function alter_form_submit($form, &$form_state) {
+  $new_email = $form_state['values']['email'];
+  $new_name = $form_state['values']['name'];
+  db_insert('d7_news_subscriptions')
+    ->fields(array(
+      'name' => $new_name,
+      'email' => $new_email,
+    ))
+    ->execute();
+  drupal_set_message(t('Success!'));
+}
+

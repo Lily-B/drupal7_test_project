@@ -3,5 +3,8 @@ description = "An example module used to learn module development and forms crea
 name = "d7 custom form"
 package = Custom Modules
 
+files[] = includes/custom_fapi_validation_rules.inc
+dependencies[] = fapi_validation
+
 ; NEW LINE
 configure = admin/config/content/d7
