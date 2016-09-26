@@ -155,7 +155,13 @@ function ds_form_permission() {
   );
 }
 
-
-
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function ds_form_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return 'plugins/' . $plugin;
+  }
+}
 
 

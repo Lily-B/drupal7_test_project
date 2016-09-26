@@ -6,6 +6,7 @@ package = Custom Modules
 files[] = includes/custom_fapi_validation_rules.inc
 dependencies[] = fapi_validation
 dependencies[] = schema
+dependencies[] = ctools
 
 ; NEW LINE
 ;configure = admin/config/content/form
