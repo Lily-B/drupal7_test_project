@@ -26,11 +26,10 @@ function ds_form_subscription_form($form, &$form_state) {
     '#title' => t('First Name'),
     '#type' => 'textfield',
     '#attributes' => array(
-      'placeholder'=> t('First Name *'),
+      'placeholder' => t('First Name'),
     ),
     '#size' => 20,
     '#maxlength' => 20,
-    '#required' => TRUE,
     '#rules' => array(
       'alpha_space',
       array(
@@ -43,11 +42,17 @@ function ds_form_subscription_form($form, &$form_state) {
     '#title' => t('Last Name'),
     '#type' => 'textfield',
     '#attributes' => array(
-      'placeholder'=> t('Last Name *'),
+      'placeholder' => t('Last Name'),
+    ),
+    '#states' => array(
+      'required' => array(
+        ':input[name="first_name"]' => array(
+          'filled' => TRUE
+        ),
+      ),
     ),
     '#size' => 20,
     '#maxlength' => 20,
-    '#required' => TRUE,
     '#rules' => array(
       'alpha_space',
       array(
@@ -56,13 +61,44 @@ function ds_form_subscription_form($form, &$form_state) {
       )
     ),
   );
+  $form['gender'] = array(
+    '#type' => 'radios',
+    '#title' => t('Gender'),
+    '#options' => array(
+      'female' => t('Female'),
+      'male' => t('Male'),
+    ),
+  );
+
+  $form['male_age'] = array(
+    '#title' => t('Male Age'),
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Age'),
+    ),
+    '#size' => 3,
+    '#rules' => array(
+      'numeric',
+      array(
+        'rule' => 'length[1,3]',
+        'error' => t('Please, enter a real age.')
+      )
+    ),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="gender"]' => array(
+          'value' => 'male'
+        ),
+      ),
+    ),
+  );
 
   $form['email'] = array(
     '#title' => t('Email'),
     '#type' => 'textfield',
     '#required' => TRUE,
     '#attributes' => array(
-      'placeholder'=> t('Email Address *'),
+      'placeholder' => t('Email Address *'),
     ),
     '#rules' => array(
       array(
@@ -76,19 +112,27 @@ function ds_form_subscription_form($form, &$form_state) {
     ),
   );
 
-  $form['email_repeat'] = array(
-    '#title' => t('Email repeat'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#attributes' => array(
-      'placeholder'=> t('Repeat Email Address *'),
+  $form['country'] = array(
+    '#title' => t('Country'),
+    '#type' => 'select',
+    '#options' => array(
+      'ua' => t('Ukraine'),
+      'usa' => t('USA'),
+      'stupid' => t("I don't know"),
     ),
-    '#rules' => array(
-      array(
-        'rule' => 'match_field[email]',
-        'error' => t('Please, repeat the same email')
-      )
+    '#default_value' => 'stupid',
+    '#ajax' => array(
+      'callback' => 'region_callback',
+      'wrapper' => 'region',
+      'method' => 'replace',
+      'effect' => 'fade',
     ),
+
+  );
+
+  $form['region'] = array(
+    '#prefix' => '<div id="region">',
+    '#suffix' => '</div>',
   );
 
   $form['submit_button'] = array(
@@ -99,22 +143,52 @@ function ds_form_subscription_form($form, &$form_state) {
   return $form;
 }
 
+function region_callback($form, $form_state) {
+  if ($form_state['values']['country'] == 'ua') {
+    $form['region'] = array(
+      '#prefix' => '<div id="region">',
+      '#suffix' => '</div>',
+      '#title' => t('Oblast'),
+      '#type' => 'select',
+      '#options' => array(
+        'kh' => t('Kharkivska'),
+        'ki' => t('Kievska'),
+        'lg' => t("Luganska"),
+      ),
+    );
+  }
+  elseif ($form_state['values']['country'] == 'usa') {
+    $form['region'] = array(
+      '#prefix' => '<div id="region">',
+      '#suffix' => '</div>',
+      '#title' => t('State'),
+      '#type' => 'select',
+      '#options' => array(
+        'tx' => t('Texas'),
+        'nv' => t('Nevada'),
+        'cl' => t('California'),
+      ),
+    );
+  }
+  return $form['region'];
+}
+
 /**
  * Implement hook_form_submit().
  * @param $form
  * @param $form_state
  */
 function ds_form_subscription_form_submit($form, &$form_state) {
-  $new_email = $form_state['values']['email'];
-  $new_fname = $form_state['values']['first_name'];
-  $new_lname = $form_state['values']['last_name'];
-  db_insert('ds_form_news_subscriptions')
-    ->fields(array(
-      'first_name' => $new_fname,
-      'last_name' => $new_lname,
-      'email' => $new_email,
-    ))
-    ->execute();
+//  $new_email = $form_state['values']['email'];
+//  $new_fname = $form_state['values']['first_name'];
+//  $new_lname = $form_state['values']['last_name'];
+//  db_insert('ds_form_news_subscriptions')
+//    ->fields(array(
+//      'first_name' => $new_fname,
+//      'last_name' => $new_lname,
+//      'email' => $new_email,
+//    ))
+//    ->execute();
   drupal_set_message(t('Success!'));
 }
 
@@ -125,23 +199,28 @@ function ds_form_subscription_form_submit($form, &$form_state) {
  * @return bool
  */
 function ds_form_subscription_form_validate($form, &$form_state) {
-  $new_email = $form_state['values']['email'];
-  if (!(db_table_exists('ds_form_news_subscriptions'))) {
-    //create table or show message
-    drupal_set_message(t('DB error occurred.'), 'error');
-
+//  $new_email = $form_state['values']['email'];
+//  if (!(db_table_exists('ds_form_news_subscriptions'))) {
+//    //create table or show message
+//    drupal_set_message(t('DB error occurred.'), 'error');
+//
+//  }
+//  else {
+//    $row_exists = db_select('ds_form_news_subscriptions', 'u')
+//      ->fields('u', array('first_name'))
+//      ->condition('u.email', $new_email)
+//      ->execute()
+//      ->fetchField();
+//    if ($row_exists) {
+//      form_set_error('email', t('User with this e-mail has already subscribed.'));
+//    }
+//    return TRUE;
+//  }
+  if ($form_state['values']['first_name'] && !$form_state['values']['last_name']){
+    form_set_error('last_name', t('If you enter your first name, please enter last name too.'));
+    return FALSE;
   }
-  else {
-    $row_exists = db_select('ds_form_news_subscriptions', 'u')
-      ->fields('u', array('first_name'))
-      ->condition('u.email', $new_email)
-      ->execute()
-      ->fetchField();
-    if ($row_exists) {
-      form_set_error('email', t('User with this e-mail has already subscribed.'));
-    }
-    return TRUE;
-  }
+  return TRUE;
 }
 
 /**

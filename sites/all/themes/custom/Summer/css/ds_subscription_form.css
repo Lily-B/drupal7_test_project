@@ -21,6 +21,8 @@
     display: none;
 }
 
+
+
 #ds-form-subscription-form input {
     background-color: inherit;
     color: #ffffff;
@@ -33,7 +35,14 @@
     padding: 10px;
 }
 
-#ds_form_names div {
+
+#ds-form-subscription-form input.form-radio {
+    color: #ffffff;
+    display: inline;
+    width: auto;
+}
+
+#ds_form_names div{
     display: inline-block;
     width: 190px;
     margin: 0;
@@ -48,6 +57,56 @@
     border-radius: 0;
 }
 
+#ds_form_gender,#edit-gender{
+    display: inline-block;
+    width: auto;
+    height : auto;
+}
+
+#ds_form_gender label{
+    display: inline;
+}
+
+div#edit-gender div.form-item-gender{
+    display: inline-block;
+    margin-left: 50px;
+    padding: 0;
+}
+
+#ds_form_country{
+    margin: 17px 0;
+}
+
+#ds_form_country label{
+    display: inline;
+}
+
+#edit-country, #region select.form-select{
+    display: inline-block;
+    width: 284px;;
+    height: 37px;
+    padding: 10px 0;
+    margin-left: 50px;
+    margin-bottom: 10px;
+
+    /*margin: 17px 0;*/
+
+    background-color: inherit;
+    color: #a4a5a5;
+    border: 1px solid #798790;
+    border-radius: 0;
+    float: right;
+
+
+
+}
+#ds_form_country div.form-type-select{
+    height: 50px;
+}
+#ds_form_country label{
+    float: none;
+    padding-top: 40px;
+}
 #ds-form-subscription-form #edit-last-name {
     margin-left: 2px;
     display: inline-block;
