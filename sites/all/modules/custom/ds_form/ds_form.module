@@ -14,13 +14,25 @@ function ds_form_menu() {
     'page arguments' => array('ds_form_subscription_form'),
     'access arguments' => array('access form content'),
   );
+
+//  $items['friend_subscription/%'] = array(
+//    'page callback' => 'ds_form_subscribe_friend_fields',
+//    'page arguments' => array('ajax'),
+//    'delivery callback' => 'ajax_deliver',
+//    'access callback' => TRUE,
+//  );
+
   return $items;
 }
 
 /**
- * Custom sub.
+ * Custom subscription form.
  */
 function ds_form_subscription_form($form, &$form_state) {
+
+  $form['#attached']['js'][] = drupal_get_path('module', 'ds_form')
+    . '/js/custom_state.js';
+
 
   $form['first_name'] = array(
     '#title' => t('First Name'),
@@ -37,14 +49,34 @@ function ds_form_subscription_form($form, &$form_state) {
         'error' => t('Please, enter a shorter than 20 char name.')
       )
     ),
+    '#states' => array(
+      'custom_state' => array(
+        ':input[name="last_name"]' => array(
+          'filled' => TRUE
+        ),
+      ),
+      'required' => array(
+        ':input[name="last_name"]' => array(
+          'filled' => TRUE
+        ),
+      ),
+    ),
   );
+
   $form['last_name'] = array(
+    '#prefix' => '<div id="lName">',
+    '#suffix' => '</div>',
     '#title' => t('Last Name'),
     '#type' => 'textfield',
     '#attributes' => array(
       'placeholder' => t('Last Name'),
     ),
     '#states' => array(
+      'custom_state' => array(
+        ':input[name="first_name"]' => array(
+          'filled' => TRUE
+        ),
+      ),
       'required' => array(
         ':input[name="first_name"]' => array(
           'filled' => TRUE
@@ -61,6 +93,7 @@ function ds_form_subscription_form($form, &$form_state) {
       )
     ),
   );
+
   $form['gender'] = array(
     '#type' => 'radios',
     '#title' => t('Gender'),
@@ -115,24 +148,34 @@ function ds_form_subscription_form($form, &$form_state) {
   $form['country'] = array(
     '#title' => t('Country'),
     '#type' => 'select',
-    '#options' => array(
-      'ua' => t('Ukraine'),
-      'usa' => t('USA'),
-      'stupid' => t("I don't know"),
-    ),
-    '#default_value' => 'stupid',
+    '#options' => country_get_list(),
+    '#default_value' => 'UG',
     '#ajax' => array(
-      'callback' => 'region_callback',
+      'callback' => 'ds_form_region_callback',
       'wrapper' => 'region',
       'method' => 'replace',
       'effect' => 'fade',
     ),
-
   );
 
   $form['region'] = array(
     '#prefix' => '<div id="region">',
     '#suffix' => '</div>',
+    '#type' => 'markup',
+  );
+
+  $form['subscribe_friend'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('I want to subscribe my friend.'),
+    '#default_value' => FALSE,
+    '#ajax' => array(
+      'callback' => 'ds_form_subscribe_friend_info',
+//      'callback' => 'friend_subscription/nojs',
+//      'wrapper' => 'subscribe_friend_wrapper',
+//      'method' => 'replace',
+//      'effect' => 'fade',
+    ),
+    '#suffix' => '<div id="subscribe_friend_wrapper"></div>',
   );
 
   $form['submit_button'] = array(
@@ -143,8 +186,47 @@ function ds_form_subscription_form($form, &$form_state) {
   return $form;
 }
 
-function region_callback($form, $form_state) {
-  if ($form_state['values']['country'] == 'ua') {
+function ds_form_subscribe_friend_info($form, &$form_state){
+  if ($form_state['values']['subscribe_friend']){
+    $form['friend_email'] = array(
+      '#prefix' => '<div id="subscribe_friend_wrapper"><div id="ds_form_friend_email"> ',
+      '#suffix' => '</div></div>',
+      '#title' => t("My friend's Email"),
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#attributes' => array(
+        'placeholder' => t("My friend's Email Address *"),
+      ),
+      '#rules' => array(
+        array(
+          'rule' => 'friend_email',
+          'error' => t('Please, enter a valid email.')
+        ),
+        array(
+          'rule' => 'length[3,30]',
+          'error' => t('Please, enter a shorter than 30 char email.')
+        )
+      ),
+    );
+    $output = render($form['friend_email']);
+    $commands = array();
+    $commands[] = ajax_command_replace('#subscribe_friend_wrapper', $output);
+  }else{
+    $output = '<div id="subscribe_friend_wrapper"></div>';
+  }
+  $commands = array();
+  $commands[] = ajax_command_replace('#subscribe_friend_wrapper', $output);
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Callback to change #region <div>
+ * @param $form
+ * @param $form_state
+ * @return array
+ */
+function ds_form_region_callback($form, $form_state) {
+  if ($form_state['values']['country'] == 'UA') {
     $form['region'] = array(
       '#prefix' => '<div id="region">',
       '#suffix' => '</div>',
@@ -157,7 +239,7 @@ function region_callback($form, $form_state) {
       ),
     );
   }
-  elseif ($form_state['values']['country'] == 'usa') {
+  elseif ($form_state['values']['country'] == 'US') {
     $form['region'] = array(
       '#prefix' => '<div id="region">',
       '#suffix' => '</div>',
@@ -216,8 +298,12 @@ function ds_form_subscription_form_validate($form, &$form_state) {
 //    }
 //    return TRUE;
 //  }
-  if ($form_state['values']['first_name'] && !$form_state['values']['last_name']){
+  if ($form_state['values']['first_name'] && !$form_state['values']['last_name']) {
     form_set_error('last_name', t('If you enter your first name, please enter last name too.'));
+    return FALSE;
+  }
+  if ($form_state['values']['last_name'] && !$form_state['values']['first_name']) {
+    form_set_error('first_name', t('If you enter your last name, please enter first name too.'));
     return FALSE;
   }
   return TRUE;
@@ -242,5 +328,3 @@ function ds_form_ctools_plugin_directory($module, $plugin) {
     return 'plugins/' . $plugin;
   }
 }
-
-

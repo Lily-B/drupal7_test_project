@@ -1,4 +1,4 @@
-#ds-form-subscription-form {
+#ds_form {
 
     color: #ffffff;
     background-color: #24323d;
@@ -13,17 +13,17 @@
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
 }
 
-#ds-form-subscription-form div.form-item{
+#ds_form div.form-item{
     margin:0;
 }
 
-#ds-form-subscription-form label {
+#ds_form label, #ds_form_friend_email div label {
     display: none;
 }
 
 
 
-#ds-form-subscription-form input {
+#ds_form input {
     background-color: inherit;
     color: #ffffff;
     border: 1px solid #798790;
@@ -36,7 +36,7 @@
 }
 
 
-#ds-form-subscription-form input.form-radio {
+#ds_form input.form-radio {
     color: #ffffff;
     display: inline;
     width: auto;
@@ -100,6 +100,15 @@ div#edit-gender div.form-item-gender{
 
 
 }
+
+
+#edit-country option, #region select.form-select option{
+    margin-bottom: 10px;
+    background-color: #24323d;
+    color: #a4a5a5;
+
+}
+
 #ds_form_country div.form-type-select{
     height: 50px;
 }
@@ -107,13 +116,25 @@ div#edit-gender div.form-item-gender{
     float: none;
     padding-top: 40px;
 }
-#ds-form-subscription-form #edit-last-name {
+
+#ds_form_friend label{
+    display: inline;
+    font-weight: bold;
+}
+
+#ds_form_friend input[type="checkbox"]{
+    width: auto;
+}
+#ds_form_friend_email{
+
+}
+#ds_form #edit-last-name {
     margin-left: 2px;
     display: inline-block;
     /*float: right;*/
 }
 
-#ds-form-subscription-form input[type="submit"] {
+#ds_form input[type="submit"] {
     border: none;
     background-image: none;
     background-color: #1ab188;
