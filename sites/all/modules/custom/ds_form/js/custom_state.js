@@ -9,15 +9,16 @@
     $(document).bind('state:custom_state', function (e) {
 
         if (e.trigger) {
+            var placeholder = $(e.target).attr('placeholder').replace(/\*+$/g, '');
+            // var placeholder = $(e.target).attr('placeholder').replace(/[^a-zA-Z ]/g, '');
             if (e.value) {
-
-                var required_placeholder = e.target.labels["0"].innerHTML.concat('*');
+                var required_placeholder = placeholder.concat('*');
                 $(e.target).attr('placeholder', required_placeholder);
             }
             else{
-                var required_placeholder = e.target.labels["0"].innerHTML;
-                $(e.target).attr('placeholder', required_placeholder);
+                $(e.target).attr('placeholder', placeholder);
             }
         }
     });
 })(jQuery);
+

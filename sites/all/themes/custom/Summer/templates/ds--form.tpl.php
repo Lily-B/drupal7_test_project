@@ -22,6 +22,7 @@
 
   <div id="ds_form_friend">
     <?php print render($form['subscribe_friend']); ?>
+    <?php print render($form['friend_email']); ?>
   </div>
 
   <div id="ds_form_submit">

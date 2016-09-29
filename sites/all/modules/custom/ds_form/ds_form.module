@@ -16,8 +16,8 @@ function ds_form_menu() {
   );
 
 //  $items['friend_subscription/%'] = array(
-//    'page callback' => 'ds_form_subscribe_friend_fields',
-//    'page arguments' => array('ajax'),
+//    'page callback' => 'ds_form_subscribe_friend_info',
+//    'page arguments' => array(true),
 //    'delivery callback' => 'ajax_deliver',
 //    'access callback' => TRUE,
 //  );
@@ -38,7 +38,7 @@ function ds_form_subscription_form($form, &$form_state) {
     '#title' => t('First Name'),
     '#type' => 'textfield',
     '#attributes' => array(
-      'placeholder' => t('First Name'),
+      'placeholder' => t('First Name '),
     ),
     '#size' => 20,
     '#maxlength' => 20,
@@ -69,7 +69,7 @@ function ds_form_subscription_form($form, &$form_state) {
     '#title' => t('Last Name'),
     '#type' => 'textfield',
     '#attributes' => array(
-      'placeholder' => t('Last Name'),
+      'placeholder' => t('Last Name '),
     ),
     '#states' => array(
       'custom_state' => array(
@@ -170,10 +170,6 @@ function ds_form_subscription_form($form, &$form_state) {
     '#default_value' => FALSE,
     '#ajax' => array(
       'callback' => 'ds_form_subscribe_friend_info',
-//      'callback' => 'friend_subscription/nojs',
-//      'wrapper' => 'subscribe_friend_wrapper',
-//      'method' => 'replace',
-//      'effect' => 'fade',
     ),
     '#suffix' => '<div id="subscribe_friend_wrapper"></div>',
   );
@@ -182,15 +178,20 @@ function ds_form_subscription_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Submit!'),
   );
-
   return $form;
 }
 
+/**
+ * Adds ajax for friend's mail field
+ * @param $form
+ * @param $form_state
+ * @return array
+ */
 function ds_form_subscribe_friend_info($form, &$form_state){
   if ($form_state['values']['subscribe_friend']){
     $form['friend_email'] = array(
-      '#prefix' => '<div id="subscribe_friend_wrapper"><div id="ds_form_friend_email"> ',
-      '#suffix' => '</div></div>',
+      '#prefix' => '<div id="ds_form_friend_email">',
+      '#suffix' => '</div>',
       '#title' => t("My friend's Email"),
       '#type' => 'textfield',
       '#required' => TRUE,
@@ -209,13 +210,12 @@ function ds_form_subscribe_friend_info($form, &$form_state){
       ),
     );
     $output = render($form['friend_email']);
-    $commands = array();
-    $commands[] = ajax_command_replace('#subscribe_friend_wrapper', $output);
   }else{
-    $output = '<div id="subscribe_friend_wrapper"></div>';
+    $output = '';
   }
   $commands = array();
-  $commands[] = ajax_command_replace('#subscribe_friend_wrapper', $output);
+  $commands[] = ajax_command_alert('Please, make sure your friend wants it.');
+  $commands[] = ajax_command_html('#subscribe_friend_wrapper', $output);
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
