@@ -1,0 +1,10 @@
+core = "7.x"
+description = "Storage for pets owners"
+name = "Pet Owners Storage"
+package = Custom Modules
+
+
+files[] = includes/validation_rules/custom_fapi_validation_rules.inc
+dependencies[] = fapi_validation
+dependencies[] = schema
+dependencies[] = ctools

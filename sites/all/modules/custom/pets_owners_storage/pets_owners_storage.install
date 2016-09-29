@@ -1,0 +1,39 @@
+<?php
+/**
+ * Implements hook_schema
+ */
+function pets_owners_storage_schema() {
+  $schema['pets_owners_storage'] = array(
+    'description' => "Table for pets owners",
+    'fields' => array(
+      'id' => array(
+        'description' => "Pets owner's ID",
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'first_name' => array(
+        'description' => "Pets owner's first name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'last_name' => array(
+        'description' => "Pets owner's last name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'email' => array(
+        'description' => "Pets owner's email",
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+      ),
+    ),
+    'unique keys' => array(
+      'email' => array('email')
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}

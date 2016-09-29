@@ -173,7 +173,6 @@ function ds_form_subscription_form($form, &$form_state) {
     ),
     '#suffix' => '<div id="subscribe_friend_wrapper"></div>',
   );
-
   $form['submit_button'] = array(
     '#type' => 'submit',
     '#value' => t('Submit!'),

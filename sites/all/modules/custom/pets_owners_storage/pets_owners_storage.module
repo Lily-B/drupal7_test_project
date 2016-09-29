@@ -1,0 +1,161 @@
+<?php
+
+module_load_include('inc', 'pets_owners_storage', 'includes/validation_rules/custom_fapi_validation_rules');
+module_load_include('inc', 'pets_owners_storage', 'includes/db/db');
+/**
+ * Implement hook_menu().
+ */
+function pets_owners_storage_menu() {
+  $items = array();
+
+  $items['pets_owners_storage/add_form'] = array(
+    'title' => 'Pets owners form',
+    'description' => 'A new pet owners form',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pets_owners_storage_form'),
+    'access arguments' => array('access form content'),
+  );
+
+  $items['pets_owners_storage/pets_owners_page'] = array(
+    'title' => 'Pets owners',
+    'description' => 'All pets owners in DB',
+    'page callback' => 'pets_owners_storage_admin_page',
+    'access callback' => TRUE,
+    'access arguments' => array('access form content'),
+    'file' => 'includes/pets_owners_storage_admin_page.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Custom Pets owner's form.
+ */
+function pets_owners_storage_form($form, &$form_state) {
+
+  $form['add'] = array(
+    '#type'  => 'fieldset',
+    '#title' => t('Add a person entry'),
+  );
+
+  $form['add']['first_name'] = array(
+    '#prefix' => '<div id="fName">',
+    '#suffix' => '</div>',
+    '#title' => t('First Name'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => array(
+      'placeholder' => t('First Name '),
+    ),
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#rules' => array(
+      'alpha_dash',
+      array(
+        'rule' => 'length[1,20]',
+        'error' => t('Please, enter a shorter than 20 char name.')
+      ),
+    ),
+  );
+
+  $form['add']['last_name'] = array(
+    '#prefix' => '<div id="lName">',
+    '#suffix' => '</div>',
+    '#title' => t('Last Name'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => array(
+      'placeholder' => t('Last Name '),
+    ),
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#rules' => array(
+      'alpha_dash',
+      array(
+        'rule' => 'length[1,20]',
+        'error' => t('Please, enter a shorter than 20 char name.')
+      )
+    ),
+  );
+
+  $form['add']['email'] = array(
+    '#title' => t('Email'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => array(
+      'placeholder' => t('Email Address *'),
+    ),
+    '#rules' => array(
+      array(
+        'rule' => 'email',
+        'error' => t('Please, enter a valid email.')
+      ),
+      array(
+        'rule' => 'length[3,30]',
+        'error' => t('Please, enter a shorter than 30 char email.')
+      )
+    ),
+  );
+
+  $form['add']['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit!'),
+  );
+  return $form;
+}
+
+
+/**
+ * Implement hook_form_submit().
+ * @param $form
+ * @param $form_state
+ */
+function pets_owners_storage_form_submit($form, &$form_state) {
+  $new_email = $form_state['values']['email'];
+  $new_fname = $form_state['values']['first_name'];
+  $new_lname = $form_state['values']['last_name'];
+  $entry = array(
+    'first_name' => $new_fname,
+    'last_name' => $new_lname,
+    'email' => $new_email,
+  );
+  if (add_new_pets_owner($entry)) {
+    drupal_set_message(t('Success!'));
+  };
+}
+
+/**
+ * Implement hook_form_validate().
+ * @param $form
+ * @param $form_state
+ * @return bool
+ */
+function pets_owners_storage_form_validate($form, &$form_state) {
+
+  //Add validation to check if  required fields are not null!!!
+
+  $new_email = $form_state['values']['email'];
+  if (!(db_table_exists('pets_owners_storage'))) {
+    //create table or show message:
+    drupal_set_message(t('DB error occurred. Table was not found.'), 'error');
+    return FALSE;
+  }
+  else {
+    if (email_exists_in_db($new_email)) {
+      form_set_error('email', t('User with this e-mail already exists.'));
+      return FALSE;
+    }
+    return TRUE;
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function pets_owners_storage_permission() {
+  return array(
+    'access form content' => array(
+      'title' => t('Access content for the Form module'),
+    )
+  );
+}
