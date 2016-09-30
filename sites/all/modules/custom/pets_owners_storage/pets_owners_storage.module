@@ -13,16 +13,31 @@ function pets_owners_storage_menu() {
     'description' => 'A new pet owners form',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pets_owners_storage_form'),
-    'access arguments' => array('access form content'),
+    'access arguments' => array('access add pets owners form'),
   );
 
   $items['pets_owners_storage/pets_owners_page'] = array(
     'title' => 'Pets owners',
     'description' => 'All pets owners in DB',
     'page callback' => 'pets_owners_storage_admin_page',
-    'access callback' => TRUE,
-    'access arguments' => array('access form content'),
+    'access arguments' => array('access all pets owners table'),
     'file' => 'includes/pets_owners_storage_admin_page.inc',
+  );
+
+  $items['pets_owners_storage/edit_form/%'] = array(
+    'title' => 'Edit pets owner',
+    'description' => 'Pets owners edit form',
+    'page callback' => 'pets_owners_storage_edit_form_callback',
+    'page arguments' => array(2),
+    'access arguments' => array('access all pets owners table'),
+    'file' => 'includes/pets_owners_storage_edit_form.inc',
+  );
+
+  $items['pets_owners_storage/delete_owner/%'] = array(
+    'page callback' => 'pets_owners_storage_delete_callback',
+    'page arguments' => array(2),
+    'access arguments' => array('access all pets owners table'),
+    'file' => 'includes/pets_owners_storage_delete.inc',
   );
 
   return $items;
@@ -34,7 +49,7 @@ function pets_owners_storage_menu() {
 function pets_owners_storage_form($form, &$form_state) {
 
   $form['add'] = array(
-    '#type'  => 'fieldset',
+    '#type' => 'fieldset',
     '#title' => t('Add a person entry'),
   );
 
@@ -119,7 +134,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
     'last_name' => $new_lname,
     'email' => $new_email,
   );
-  if (add_new_pets_owner($entry)) {
+  if (add_new_pets_owner_in_db($entry)) {
     drupal_set_message(t('Success!'));
   };
 }
@@ -135,18 +150,10 @@ function pets_owners_storage_form_validate($form, &$form_state) {
   //Add validation to check if  required fields are not null!!!
 
   $new_email = $form_state['values']['email'];
-  if (!(db_table_exists('pets_owners_storage'))) {
-    //create table or show message:
-    drupal_set_message(t('DB error occurred. Table was not found.'), 'error');
-    return FALSE;
+  if (email_exists_in_db($new_email)) {
+    form_set_error('email', t('User with this e-mail already exists.'));
   }
-  else {
-    if (email_exists_in_db($new_email)) {
-      form_set_error('email', t('User with this e-mail already exists.'));
-      return FALSE;
-    }
-    return TRUE;
-  }
+
 }
 
 /**
@@ -154,8 +161,11 @@ function pets_owners_storage_form_validate($form, &$form_state) {
  */
 function pets_owners_storage_permission() {
   return array(
-    'access form content' => array(
-      'title' => t('Access content for the Form module'),
-    )
+    'access add pets owners form' => array(
+      'title' => t('Access form for adding new pets owner in pets_owners_storage module.'),
+    ),
+    'access all pets owners table' => array(
+      'title' => t('Access table of all pets owners in pets_owners_storage module.'),
+    ),
   );
 }
