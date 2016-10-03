@@ -1,19 +1,19 @@
 <?php
-
 module_load_include('inc', 'pets_owners_storage', 'includes/validation_rules/custom_fapi_validation_rules');
 module_load_include('inc', 'pets_owners_storage', 'includes/db/db');
+module_load_include('inc', 'pets_owners_storage', 'includes/pets_owners_storage.forms');
 /**
  * Implement hook_menu().
  */
 function pets_owners_storage_menu() {
   $items = array();
 
-  $items['pets_owners_storage/add_form'] = array(
+  $items['pets_owners_storage/pets_owners_form'] = array(
     'title' => 'Pets owners form',
     'description' => 'A new pet owners form',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pets_owners_storage_form'),
-    'access arguments' => array('access add pets owners form'),
+    'access arguments' => array('access pets owners form'),
   );
 
   $items['pets_owners_storage/pets_owners_page'] = array(
@@ -21,7 +21,7 @@ function pets_owners_storage_menu() {
     'description' => 'All pets owners in DB',
     'page callback' => 'pets_owners_storage_admin_page',
     'access arguments' => array('access all pets owners table'),
-    'file' => 'includes/pets_owners_storage_admin_page.inc',
+    'file' => 'includes/pets_owners_storage.pages.inc',
   );
 
   $items['pets_owners_storage/edit_form/%'] = array(
@@ -30,138 +30,33 @@ function pets_owners_storage_menu() {
     'page callback' => 'pets_owners_storage_edit_form_callback',
     'page arguments' => array(2),
     'access arguments' => array('access all pets owners table'),
-    'file' => 'includes/pets_owners_storage_edit_form.inc',
+    'file' => 'includes/pets_owners_storage.pages.inc',
   );
 
   $items['pets_owners_storage/delete_owner/%'] = array(
     'page callback' => 'pets_owners_storage_delete_callback',
     'page arguments' => array(2),
     'access arguments' => array('access all pets owners table'),
-    'file' => 'includes/pets_owners_storage_delete.inc',
+    'file' => 'includes/pets_owners_storage.pages.inc',
+  );
+
+  $items['pets_owners_storage/confirm_delete/%'] = array(
+    'page callback' => 'pets_owners_storage_confirm_callback',
+    'page arguments' => array(2),
+    'access arguments' => array('access all pets owners table'),
+    'file' => 'includes/pets_owners_storage.pages.inc',
   );
 
   return $items;
 }
 
-/**
- * Custom Pets owner's form.
- */
-function pets_owners_storage_form($form, &$form_state) {
-
-  $form['add'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Add a person entry'),
-  );
-
-  $form['add']['first_name'] = array(
-    '#prefix' => '<div id="fName">',
-    '#suffix' => '</div>',
-    '#title' => t('First Name'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#attributes' => array(
-      'placeholder' => t('First Name '),
-    ),
-    '#size' => 20,
-    '#maxlength' => 20,
-    '#rules' => array(
-      'alpha_dash',
-      array(
-        'rule' => 'length[1,20]',
-        'error' => t('Please, enter a shorter than 20 char name.')
-      ),
-    ),
-  );
-
-  $form['add']['last_name'] = array(
-    '#prefix' => '<div id="lName">',
-    '#suffix' => '</div>',
-    '#title' => t('Last Name'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#attributes' => array(
-      'placeholder' => t('Last Name '),
-    ),
-    '#size' => 20,
-    '#maxlength' => 20,
-    '#rules' => array(
-      'alpha_dash',
-      array(
-        'rule' => 'length[1,20]',
-        'error' => t('Please, enter a shorter than 20 char name.')
-      )
-    ),
-  );
-
-  $form['add']['email'] = array(
-    '#title' => t('Email'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#attributes' => array(
-      'placeholder' => t('Email Address *'),
-    ),
-    '#rules' => array(
-      array(
-        'rule' => 'email',
-        'error' => t('Please, enter a valid email.')
-      ),
-      array(
-        'rule' => 'length[3,30]',
-        'error' => t('Please, enter a shorter than 30 char email.')
-      )
-    ),
-  );
-
-  $form['add']['submit_button'] = array(
-    '#type' => 'submit',
-    '#value' => t('Submit!'),
-  );
-  return $form;
-}
-
-
-/**
- * Implement hook_form_submit().
- * @param $form
- * @param $form_state
- */
-function pets_owners_storage_form_submit($form, &$form_state) {
-  $new_email = $form_state['values']['email'];
-  $new_fname = $form_state['values']['first_name'];
-  $new_lname = $form_state['values']['last_name'];
-  $entry = array(
-    'first_name' => $new_fname,
-    'last_name' => $new_lname,
-    'email' => $new_email,
-  );
-  if (add_new_pets_owner_in_db($entry)) {
-    drupal_set_message(t('Success!'));
-  };
-}
-
-/**
- * Implement hook_form_validate().
- * @param $form
- * @param $form_state
- * @return bool
- */
-function pets_owners_storage_form_validate($form, &$form_state) {
-
-  //Add validation to check if  required fields are not null!!!
-
-  $new_email = $form_state['values']['email'];
-  if (email_exists_in_db($new_email)) {
-    form_set_error('email', t('User with this e-mail already exists.'));
-  }
-
-}
 
 /**
  * Implements hook_permission().
  */
 function pets_owners_storage_permission() {
   return array(
-    'access add pets owners form' => array(
+    'access pets owners form' => array(
       'title' => t('Access form for adding new pets owner in pets_owners_storage module.'),
     ),
     'access all pets owners table' => array(
