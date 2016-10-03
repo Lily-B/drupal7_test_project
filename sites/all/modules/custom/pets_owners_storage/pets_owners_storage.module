@@ -2,6 +2,7 @@
 module_load_include('inc', 'pets_owners_storage', 'includes/validation_rules/custom_fapi_validation_rules');
 module_load_include('inc', 'pets_owners_storage', 'includes/db/db');
 module_load_include('inc', 'pets_owners_storage', 'includes/pets_owners_storage.forms');
+module_load_include('inc', 'pets_owners_storage', 'includes/pets_owners_storage.views');
 /**
  * Implement hook_menu().
  */
@@ -20,15 +21,6 @@ function pets_owners_storage_menu() {
     'title' => 'Pets owners',
     'description' => 'All pets owners in DB',
     'page callback' => 'pets_owners_storage_admin_page',
-    'access arguments' => array('access all pets owners table'),
-    'file' => 'includes/pets_owners_storage.pages.inc',
-  );
-
-  $items['pets_owners_storage/edit_form/%'] = array(
-    'title' => 'Edit pets owner',
-    'description' => 'Pets owners edit form',
-    'page callback' => 'pets_owners_storage_edit_form_callback',
-    'page arguments' => array(2),
     'access arguments' => array('access all pets owners table'),
     'file' => 'includes/pets_owners_storage.pages.inc',
   );
@@ -63,4 +55,11 @@ function pets_owners_storage_permission() {
       'title' => t('Access table of all pets owners in pets_owners_storage module.'),
     ),
   );
+}
+
+/**
+ * Implements hook_views_api()
+ */
+function pets_owners_storage_views_api() {
+  return array('api' => 3);
 }

@@ -5,6 +5,10 @@ package = Custom Modules
 
 
 files[] = includes/validation_rules/custom_fapi_validation_rules.inc
+files[] = includes/pets_owners_storage.views.inc
+
+
 dependencies[] = fapi_validation
 dependencies[] = schema
 dependencies[] = ctools
+dependencies[] = views

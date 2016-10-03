@@ -5,69 +5,69 @@
  */
 function pets_owners_storage_form($form, &$form_state) {
 
-  $form['p_o'] = array(
+  $form['p_o'] = [
     '#type' => 'fieldset',
     '#title' => t('Pets owners data'),
-  );
+  ];
 
-  $form['p_o']['first_name'] = array(
+  $form['p_o']['first_name'] = [
     '#prefix' => '<div id="fName">',
     '#suffix' => '</div>',
     '#title' => t('First Name'),
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#attributes' => array(
+    '#attributes' => [
       'placeholder' => t('First Name '),
-    ),
+    ],
     '#size' => 20,
     '#maxlength' => 20,
-    '#rules' => array(
+    '#rules' => [
       'alpha_dash',
-      array(
+      [
         'rule' => 'length[1,20]',
         'error' => t('Please, enter a shorter than 20 char name.')
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
-  $form['p_o']['last_name'] = array(
+  $form['p_o']['last_name'] = [
     '#prefix' => '<div id="lName">',
     '#suffix' => '</div>',
     '#title' => t('Last Name'),
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#attributes' => array(
+    '#attributes' => [
       'placeholder' => t('Last Name '),
-    ),
+    ],
     '#size' => 20,
     '#maxlength' => 20,
-    '#rules' => array(
+    '#rules' => [
       'alpha_dash',
-      array(
+      [
         'rule' => 'length[1,20]',
         'error' => t('Please, enter a shorter than 20 char name.')
-      )
-    ),
-  );
+      ]
+    ],
+  ];
 
-  $form['p_o']['email'] = array(
+  $form['p_o']['email'] = [
     '#title' => t('Email'),
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#attributes' => array(
+    '#attributes' => [
       'placeholder' => t('Email Address *'),
-    ),
-    '#rules' => array(
-      array(
+    ],
+    '#rules' => [
+      [
         'rule' => 'email',
         'error' => t('Please, enter a valid email.')
-      ),
-      array(
+      ],
+      [
         'rule' => 'length[3,30]',
         'error' => t('Please, enter a shorter than 30 char email.')
-      )
-    ),
-  );
+      ]
+    ],
+  ];
 
   $id = arg(2);
   if (isset($id)) {
@@ -82,7 +82,7 @@ function pets_owners_storage_form($form, &$form_state) {
     };
   }
 
-  $form['po']['submit_button'] = array(
+  $form['p_o']['submit_button'] = array(
     '#type' => 'submit',
     '#value' => t('Submit!'),
   );
