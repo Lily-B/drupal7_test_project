@@ -71,10 +71,15 @@ function pets_owners_storage_form($form, &$form_state) {
 
   $id = arg(2);
   if (isset($id)) {
-    $owner = find_pet_owner_by_id($id);
-    $form['p_o']['first_name']['#default_value'] = $owner->first_name;
-    $form['p_o']['last_name']['#default_value'] = $owner->last_name;
-    $form['p_o']['email']['#default_value'] = $owner->email;
+    if (user_access('access all pets owners table')) {
+      $owner = find_pet_owner_by_id($id);
+      $form['p_o']['first_name']['#default_value'] = $owner->first_name;
+      $form['p_o']['last_name']['#default_value'] = $owner->last_name;
+      $form['p_o']['email']['#default_value'] = $owner->email;
+    }
+    else {
+      drupal_access_denied();
+    };
   }
 
   $form['po']['submit_button'] = array(
@@ -102,12 +107,17 @@ function pets_owners_storage_form_submit($form, &$form_state) {
   );
 
   if (isset($id)) {
-    if (edit_pets_owner_in_db($id, $entry)) {
-      drupal_set_message(t('Pets Owners data was edited successfully!'));
-      drupal_goto('pets_owners_storage/pets_owners_page');
+    if (user_access('access all pets owners table')) {
+      if (edit_pets_owner_in_db($id, $entry)) {
+        drupal_set_message(t('Pets Owners data was edited successfully!'));
+        drupal_goto('pets_owners_storage/pets_owners_page');
+      }
+      else {
+        drupal_set_message(t('Editing failed!'), 'error');
+      }
     }
     else {
-      drupal_set_message(t('Editing failed!'), 'error');
+      drupal_access_denied();
     };
   }
   else {
@@ -118,6 +128,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
       drupal_set_message(t('Adding failed!'), 'error');
     };
   }
+
 }
 
 /**
@@ -137,7 +148,7 @@ function pets_owners_storage_form_validate($form, &$form_state) {
       form_set_error('email', t('Pets Owner with this E-mail already exists!'));
     };
   }
-  else{
+  else {
     if (email_exists_in_db($new_email)) {
       form_set_error('email', t('User with this e-mail already exists.'));
     }
