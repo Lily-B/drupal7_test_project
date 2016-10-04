@@ -37,3 +37,48 @@ function pets_owners_storage_schema() {
   );
   return $schema;
 }
+
+
+/**
+ * Add new field in table 'pets_owners_storage'.
+ */
+function pets_owners_storage_update_7100() {
+  db_add_field('pets_owners_storage', 'city', array(
+    'type' => 'varchar',
+    'description' => "Pets owner's city",
+    'length' => 20,
+    'not null' => FALSE,
+  ));
+  db_add_index('pets_owners_storage', 'email', array('email'));
+}
+
+/**
+ * Delete new field (city) in table 'pets_owners_storage'.
+ */
+function pets_owners_storage_update_7101() {
+  db_drop_field('pets_owners_storage', 'city');
+}
+
+/**
+ * Add new fields (city, birthday) in table 'pets_owners_storage'.
+ */
+function pets_owners_storage_update_7102() {
+  db_add_field('pets_owners_storage', 'city', [
+    'type' => 'varchar',
+    'description' => "Pets owner's city",
+    'length' => 20,
+    'not null' => FALSE,
+  ]);
+  db_add_field('pets_owners_storage', 'birthday', [
+    'type' => 'int',
+    'description' => "Pets owner's birthday Timestamp",
+    'unsigned' => TRUE,
+  ]);
+}
+
+/**
+ * Add new unique key in table 'pets_owners_storage'.
+ */
+function pets_owners_storage_update_7103() {
+  db_add_unique_key('pets_owners_storage', 'owner_key', ['first_name','last_name','birthday',]);
+}
