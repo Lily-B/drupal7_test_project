@@ -107,18 +107,13 @@ function pets_owners_storage_form_submit($form, &$form_state) {
   );
 
   if (isset($id)) {
-    if (user_access('access all pets owners table')) {
-      if (edit_pets_owner_in_db($id, $entry)) {
-        drupal_set_message(t('Pets Owners data was edited successfully!'));
-        drupal_goto('pets_owners_storage/pets_owners_page');
-      }
-      else {
-        drupal_set_message(t('Editing failed!'), 'error');
-      }
+    if (edit_pets_owner_in_db($id, $entry)) {
+      drupal_set_message(t('Pets Owners data was edited successfully!'));
+      drupal_goto('pets_owners_storage/pets_owners_page');
     }
     else {
-      drupal_access_denied();
-    };
+      drupal_set_message(t('Editing failed!'), 'error');
+    }
   }
   else {
     if (add_new_pets_owner_in_db($entry)) {

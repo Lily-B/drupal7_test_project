@@ -48,7 +48,6 @@ function pets_owners_storage_admin_page() {
         l(t('Edit'), 'pets_owners_storage/pets_owners_form/' . $owner->id, array('attributes' => array('class' => 'edit-link'))),
         l(t('Delete'), 'pets_owners_storage/confirm_delete/' . $owner->id, array('attributes' => array('class' => 'delete-link')))
       );
-
     }
     $header = array(
       t('Id'),
