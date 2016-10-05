@@ -74,7 +74,6 @@ function find_pet_owner_by_id($id) {
       ->condition('s.id', $id)
       ->execute()
       ->fetchObject();
-
   }
   catch (Exception $e) {
     drupal_set_message(t('db_select failed. Message = %message, query= %query',
@@ -148,3 +147,52 @@ function is_owners_email_unique($owner_id, $owner_email) {
   return (count($same_emails) == 0);
 }
 
+/**
+ * function for select content in pets owners form
+ * @param $voc
+ * @return mixed
+ */
+function get_all_terms_of_vocab($voc_name) {
+  $vocabulary = taxonomy_vocabulary_machine_name_load($voc_name);
+  $terms = taxonomy_get_tree($vocabulary->vid);
+  foreach ($terms as $data) {
+    $output[$data->tid] = $data->name;
+  }
+  return $output;
+}
+
+/**
+ * Convert date from form date field to timestamp
+ * @param $form_date_fields
+ * @return int
+ */
+function forms_date_to_timestamp($form_date_fields) {
+  $string_date = "{$form_date_fields['year']}-{$form_date_fields['month']}-{$form_date_fields['day']}";
+  $timezone = NULL;
+  $date_time = new DateTime($string_date, $timezone);
+  $timestamp = $date_time->getTimestamp();
+  return $timestamp;
+}
+
+/**
+ * Check if this first_name&last_name&birthday_timestamp already exist in database
+ * @param $owner_id
+ * @param $owner_f_name
+ * @param $owner_l_name
+ * @param $owner_birth
+ * @return bool
+ */
+function are_owner_names_and_birth_unique($owner_id, $owner_f_name, $owner_l_name, $owner_birth) {
+
+  $same_rows = db_select('pets_owners_storage', 's')
+    ->fields('s');
+  if (isset($owner_id)) {
+    $same_rows = $same_rows->condition('s.id', $owner_id, '<>');
+  };
+  $same_rows = $same_rows->condition('s.first_name', $owner_f_name, '=')
+    ->condition('s.last_name', $owner_l_name, '=')
+    ->condition('s.birthday_timestamp', $owner_birth, '=')
+    ->execute()
+    ->fetchAll();
+return (count($same_rows) == 0);
+}

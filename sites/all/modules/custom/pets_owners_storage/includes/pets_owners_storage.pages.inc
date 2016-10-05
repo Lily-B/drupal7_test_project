@@ -37,6 +37,7 @@ function pets_owners_storage_delete_callback($id) {
  */
 function pets_owners_storage_admin_page() {
   $build = '';
+  $pets = get_all_terms_of_vocab('pets');
   if ($owners = all_pets_owners_in_db()) {
     $rows = array();
     foreach ($owners as $owner) {
@@ -44,7 +45,10 @@ function pets_owners_storage_admin_page() {
         $owner->id,
         check_plain($owner->first_name),
         check_plain($owner->last_name),
+        format_date($owner->birthday_timestamp,'custom', 'Y-m-d'),
         check_plain($owner->email),
+        check_plain($owner->city),
+        $pets[$owner->pet],
         l(t('Edit'), 'pets_owners_storage/pets_owners_form/' . $owner->id, array('attributes' => array('class' => 'edit-link'))),
         l(t('Delete'), 'pets_owners_storage/confirm_delete/' . $owner->id, array('attributes' => array('class' => 'delete-link')))
       );
@@ -53,7 +57,10 @@ function pets_owners_storage_admin_page() {
       t('Id'),
       t('First Name'),
       t('Last Name'),
+      t('Owners Birthday'),
       t('E-mail'),
+      t('City'),
+      t('Pet'),
       t('Edit'),
       t('Delete')
     );

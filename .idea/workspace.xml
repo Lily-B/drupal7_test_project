@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a2aa1b8-8957-4f64-b130-8d342ddd19ae" name="Default" comment="Add">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.forms.inc" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage_delete.inc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage_edit_form.inc" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage_admin_page.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.pages.inc" />
+    <list default="true" id="7a2aa1b8-8957-4f64-b130-8d342ddd19ae" name="Default" comment="pets_owners_storage Add view for all pets owners table">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.install" afterPath="$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.install" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.forms.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.forms.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.pages.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.pages.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.views.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.views.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install" afterPath="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install" />
     </list>
     <ignored path="drupal7.local.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,11 +34,22 @@
       <file leaf-file-name="pets_owners_storage.module" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="46" />
+            <state relative-caret-position="1159">
+              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
               <folding>
-                <element signature="e#1931#1971#0#PHP" expanded="false" />
+                <element signature="e#1661#1701#0#PHP" expanded="false" />
+                <element signature="e#2047#2085#0#PHP" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pets_owners_storage.views.inc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.views.inc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="114" column="22" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -46,59 +57,60 @@
       <file leaf-file-name="pets_owners_storage.pages.inc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.pages.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="94" column="3" selection-start-line="94" selection-start-column="3" selection-end-line="94" selection-end-column="3" />
+            <state relative-caret-position="456">
+              <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
               <folding>
-                <element signature="e#7#12#0#PHP" expanded="true" />
-                <element signature="n#pets_owners_storage_confirm_callback#0;n#!!top" expanded="false" />
-                <element signature="e#1229#1335#0#PHP" expanded="false" />
-                <element signature="e#1507#1559#0#PHP" expanded="false" />
-                <element signature="e#2173#2299#0#PHP" expanded="false" />
-                <element signature="e#2329#2486#0#PHP" expanded="false" />
+                <element signature="e#919#971#0#PHP" expanded="false" />
+                <element signature="e#1968#2125#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pets_owners_storage.forms.inc" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pets_owners_storage.forms.inc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.forms.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="767">
-              <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
-              <folding>
-                <element signature="e#7#43#0#PHP" expanded="false" />
-                <element signature="e#407#460#1#PHP" expanded="false" />
-                <element signature="e#521#676#1#PHP" expanded="false" />
-                <element signature="e#554#669#1#PHP" expanded="false" />
-                <element signature="e#714#1163#0#PHP" expanded="false" />
-                <element signature="e#891#943#1#PHP" expanded="false" />
-                <element signature="e#1004#1158#1#PHP" expanded="false" />
-                <element signature="e#1037#1152#1#PHP" expanded="false" />
-                <element signature="e#1301#1358#1#PHP" expanded="false" />
-                <element signature="e#1376#1613#1#PHP" expanded="false" />
-                <element signature="e#1389#1483#1#PHP" expanded="false" />
-                <element signature="e#1491#1607#1#PHP" expanded="false" />
-                <element signature="e#1639#1901#0#PHP" expanded="false" />
-                <element signature="e#1936#2001#0#PHP" expanded="false" />
-                <element signature="e#2023#2101#0#PHP" expanded="false" />
-                <element signature="e#2750#2957#0#PHP" expanded="false" />
-                <element signature="e#2961#3057#0#PHP" expanded="false" />
-                <marker date="1475494385752" expanded="false" signature="2483:2746" ph="..." />
-              </folding>
+            <state relative-caret-position="178">
+              <caret line="201" column="50" selection-start-line="201" selection-start-column="50" selection-end-line="201" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db.inc" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pets_owners_storage.info" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.info">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pets_owners_storage.install" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="691">
+              <caret line="99" column="36" selection-start-line="99" selection-start-column="36" selection-end-line="99" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db.inc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="611">
-              <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+            <state relative-caret-position="691">
+              <caret line="184" column="96" selection-start-line="184" selection-start-column="9" selection-end-line="184" selection-end-column="96" />
               <folding>
                 <element signature="e#544#668#0#PHP" expanded="false" />
                 <element signature="e#1159#1279#0#PHP" expanded="false" />
                 <element signature="n#all_pets_owners_in_db#0;n#!!top" expanded="false" />
                 <element signature="e#1508#1595#0#PHP" expanded="false" />
+                <element signature="e#3460#3550#0#PHP" expanded="false" />
+                <element signature="n#get_all_terms_of_vocab#0;n#!!top" expanded="false" />
+                <element signature="e#3712#3782#0#PHP" expanded="false" />
+                <element signature="n#forms_date_to_timestamp#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -120,9 +132,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/d7/d7.info" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/d7/d7.install" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/d7_alter_name/d7.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/d7_alter_name/d7_alter_name.info" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/d7_alter_name/d7_alter_name.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/d7_alter_name/d7_alter_name.module" />
@@ -142,7 +151,6 @@
         <option value="$PROJECT_DIR$/sites/all/modules/custom/form/form.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/form/form.info" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/d7/d7.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.install" />
         <option value="$PROJECT_DIR$/sites/all/themes/custom/Summer/templates/node.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/themes/custom/Summer/summer.info" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/ds_form/includes/custom_fapi_validation_rules.inc" />
@@ -160,16 +168,20 @@
         <option value="$PROJECT_DIR$/sites/all/modules/custom/ds_form/js/custom_state.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/validation_rules/custom_fapi_validation_rules.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.info" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/js/confirm.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage_delete.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage_admin_page.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_starage.pages.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage_edit_form.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.views.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.info" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.install" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.pages.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.views.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.forms.inc" />
       </list>
     </option>
@@ -222,7 +234,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -714,66 +725,11 @@
               <option name="myItemId" value="all" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="contrib" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupal7.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupal7.local" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="contrib" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupal7.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupal7.local" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -785,19 +741,19 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/validation_rules" />
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/ds_form" />
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/ds_plugin/plugins" />
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/ds_plugin" />
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/d7_alter_name" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/ds_form" />
       <recent name="$PROJECT_DIR$/sites/all/themes/custom/Summer/templates" />
       <recent name="$PROJECT_DIR$/sites/all/themes/custom/Summer/css" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/form" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes" />
+      <recent name="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage" />
+      <recent name="$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/validation_rules" />
+      <recent name="$PROJECT_DIR$/sites/all/modules/custom/ds_form" />
+      <recent name="$PROJECT_DIR$/sites/all/modules/custom/ds_plugin/plugins" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Web Application.Unnamed">
@@ -881,7 +837,9 @@
       <workItem from="1475044609352" duration="27738000" />
       <workItem from="1475132791036" duration="27729000" />
       <workItem from="1475217373249" duration="26595000" />
-      <workItem from="1475477278822" duration="13267000" />
+      <workItem from="1475477278822" duration="24774000" />
+      <workItem from="1475562504033" duration="17457000" />
+      <workItem from="1475649166582" duration="19050000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit for Drupal7 site">
       <created>1474372964770</created>
@@ -946,11 +904,46 @@
       <option name="project" value="LOCAL" />
       <updated>1475245354048</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add pager in pets_owners_storage table for all owners ,&#10;Make editing and adding from one form &#10;add trim for inputs, htmlentities for output from db">
+      <created>1475494531565</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1475494531565</updated>
+    </task>
+    <task id="LOCAL-00011" summary="pets_owners_storage Add &quot;Access denied &quot; for not admins in edit &#10;owner form">
+      <created>1475495784949</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1475495784949</updated>
+    </task>
+    <task id="LOCAL-00012" summary="pets_owners_storage Add view for all pets owners table">
+      <created>1475509777371</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1475509777371</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Back up before module Update">
+      <created>1475584040263</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1475584040263</updated>
+    </task>
+    <task id="LOCAL-00014" summary="pets_owners_storage Add update  to add birthday and city field in &#10;schema">
+      <created>1475588737811</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1475588737811</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="231006000" />
+    <option name="totallyTimeSpent" value="279020000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -965,23 +958,23 @@
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25981206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26589274" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32912844" sideWeight="0.5102717" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27557412" sideWeight="0.4897283" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32912844" sideWeight="0.49768057" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33298537" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2881002" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33298537" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32881" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1042,7 +1035,12 @@
     <MESSAGE value="Changes custom state" />
     <MESSAGE value="adds pets_owners_storage module with form for adding to DB &#10;and table for all owners from DB" />
     <MESSAGE value="Add all pets owners table , edit form and delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add all pets owners table , edit form and delete" />
+    <MESSAGE value="Add pager in pets_owners_storage table for all owners ,&#10;Make editing and adding from one form &#10;add trim for inputs, htmlentities for output from db" />
+    <MESSAGE value="pets_owners_storage Add &quot;Access denied &quot; for not admins in edit &#10;owner form" />
+    <MESSAGE value="pets_owners_storage Add view for all pets owners table" />
+    <MESSAGE value="Back up before module Update" />
+    <MESSAGE value="pets_owners_storage Add update  to add birthday and city field in &#10;schema" />
+    <option name="LAST_COMMIT_MESSAGE" value="pets_owners_storage Add update  to add birthday and city field in &#10;schema" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1062,16 +1060,6 @@
           <line>240</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc</url>
-          <line>141</line>
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc</url>
-          <line>147</line>
-          <option name="timeStamp" value="61" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/sites/all/modules/custom/ds_form/js/custom_state.js</url>
           <line>7</line>
@@ -1086,69 +1074,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/ds_plugin/ds_plugin.info" />
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/custom/Summer/theme-settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/custom/Summer/css/subscription.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/fapi_validation/fapi_validation.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1064">
-          <caret line="56" column="38" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/themes/custom/Summer/template.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-          <folding>
-            <element signature="e#381#441#0#PHP" expanded="false" />
-            <element signature="e#442#1446#0#PHP" expanded="false" />
-            <element signature="e#491#588#0#PHP" expanded="false" />
-            <element signature="e#592#799#0#PHP" expanded="false" />
-            <element signature="e#803#1086#0#PHP" expanded="false" />
-            <element signature="e#1448#1527#0#PHP" expanded="false" />
-            <element signature="e#1528#1673#0#PHP" expanded="false" />
-            <element signature="e#1603#1671#0#PHP" expanded="false" />
-            <element signature="e#1675#1738#0#PHP" expanded="false" />
-            <element signature="e#1739#3333#0#PHP" expanded="false" />
-            <element signature="e#1814#1882#0#PHP" expanded="false" />
-            <element signature="e#2164#2367#0#PHP" expanded="false" />
-            <element signature="e#2370#2582#0#PHP" expanded="false" />
-            <element signature="e#2736#3331#0#PHP" expanded="false" />
-            <element signature="e#2962#3060#0#PHP" expanded="false" />
-            <element signature="e#3115#3180#0#PHP" expanded="false" />
-            <element signature="e#3335#3392#0#PHP" expanded="false" />
-            <element signature="e#3393#3858#0#PHP" expanded="false" />
-            <element signature="e#3454#3528#0#PHP" expanded="false" />
-            <element signature="e#3700#3772#0#PHP" expanded="false" />
-            <element signature="e#3860#3935#0#PHP" expanded="false" />
-            <element signature="e#3936#4693#0#PHP" expanded="false" />
-            <element signature="e#4273#4476#0#PHP" expanded="false" />
-            <element signature="e#4479#4691#0#PHP" expanded="false" />
-            <element signature="e#4695#4758#0#PHP" expanded="false" />
-            <element signature="e#5104#5210#0#PHP" expanded="false" />
-            <element signature="e#5218#5282#0#PHP" expanded="false" />
-            <element signature="e#5387#5512#0#PHP" expanded="false" />
-            <element signature="e#5516#5556#0#PHP" expanded="false" />
-            <element signature="e#5557#5668#0#PHP" expanded="false" />
-            <element signature="e#5670#5718#0#PHP" expanded="false" />
-            <element signature="e#5719#6567#0#PHP" expanded="false" />
-            <element signature="e#5842#5957#0#PHP" expanded="false" />
-            <element signature="e#6105#6307#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1160,7 +1089,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1753">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1168,7 +1096,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5026">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1193,11 +1120,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="340" column="0" selection-start-line="340" selection-start-column="0" selection-end-line="340" selection-end-column="0" />
-          <folding>
-            <marker date="1467915952000" expanded="true" signature="4469:4589" ph="SELECT name,... " />
-            <marker date="1467915952000" expanded="true" signature="5939:6048" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="15791:15854" ph="SELECT statu... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1205,9 +1127,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding>
-            <marker date="1458234169000" expanded="true" signature="9256:9321" ph="SELECT COUNT... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1228,7 +1147,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1236,17 +1154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="539" column="0" selection-start-line="539" selection-start-column="0" selection-end-line="539" selection-end-column="0" />
-          <folding>
-            <marker date="1467915952000" expanded="true" signature="15799:15871" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="110616:110661" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="110742:110797" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="111416:111464" ph="SELECT mlid " />
-            <marker date="1467915952000" expanded="true" signature="114130:114175" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="120307:120352" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="122331:122404" ph="SELECT menu_... " />
-            <marker date="1467915952000" expanded="true" signature="124512:124607" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="132671:132760" ph="SELECT menu_... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1261,18 +1168,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
           <caret line="2399" column="33" selection-start-line="2399" selection-start-column="33" selection-end-line="2399" selection-end-column="33" />
-          <folding>
-            <marker date="1467915952000" expanded="true" signature="23824:23890" ph="SELECT COUNT... " />
-            <marker date="1467915952000" expanded="true" signature="40529:40634" ph="SELECT lid F... " />
-            <marker date="1467915952000" expanded="true" signature="41313:41394" ph="SELECT COUNT... " />
-            <marker date="1467915952000" expanded="true" signature="55590:55704" ph="SELECT lid, " />
-            <marker date="1467915952000" expanded="true" signature="57309:57541" ph="SELECT s.lid... " />
-            <marker date="1467915952000" expanded="true" signature="57649:57839" ph="SELECT s.lid... " />
-            <marker date="1467915952000" expanded="true" signature="70727:70932" ph="SELECT s.lid... " />
-            <marker date="1467915952000" expanded="true" signature="73955:74007" ph="SELECT * FRO... " />
-            <marker date="1467915952000" expanded="true" signature="79511:79563" ph="SELECT name,... " />
-            <marker date="1467915952000" expanded="true" signature="83950:84028" ph="SELECT 1 FRO... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1280,7 +1175,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="51" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1288,7 +1182,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="372">
           <caret line="154" column="38" selection-start-line="154" selection-start-column="32" selection-end-line="154" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1296,7 +1189,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="824" column="31" selection-start-line="824" selection-start-column="26" selection-end-line="824" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1311,11 +1203,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="106" column="4" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
-          <folding>
-            <element signature="e#78#474#0#PHP" expanded="false" />
-            <element signature="e#476#1398#0#PHP" expanded="false" />
-            <element signature="e#5301#5993#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1330,20 +1217,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.info">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.install">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -1365,7 +1238,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2820">
           <caret line="91" column="48" selection-start-line="91" selection-start-column="15" selection-end-line="91" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1374,7 +1246,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="430">
           <caret line="673" column="3" selection-start-line="673" selection-start-column="3" selection-end-line="673" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1407,18 +1278,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/themes/custom/Summer/templates/ds--form.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
           <caret line="24" column="49" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1520,13 +1383,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3344">
           <caret line="305" column="60" selection-start-line="305" selection-start-column="60" selection-end-line="305" selection-end-column="60" />
-          <folding>
-            <element signature="e#6#337#0#PHP" expanded="false" />
-            <element signature="e#339#2073#0#PHP" expanded="false" />
-            <element signature="e#2075#2783#0#PHP" expanded="false" />
-            <element signature="e#2784#3203#0#PHP" expanded="false" />
-            <element signature="e#3205#3703#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1537,7 +1393,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="84" column="24" selection-start-line="84" selection-start-column="24" selection-end-line="84" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1551,67 +1406,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-          <folding>
-            <element signature="e#544#668#0#PHP" expanded="false" />
-            <element signature="e#1159#1279#0#PHP" expanded="false" />
-            <element signature="n#all_pets_owners_in_db#0;n#!!top" expanded="false" />
-            <element signature="e#1508#1595#0#PHP" expanded="false" />
-          </folding>
+        <state relative-caret-position="57">
+          <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/views/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/views/views.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1254">
+          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="67" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/ds_form/ds_form.install">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="46" />
+        <state relative-caret-position="1159">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding>
-            <element signature="e#1931#1971#0#PHP" expanded="false" />
+            <element signature="e#1661#1701#0#PHP" expanded="false" />
+            <element signature="e#2047#2085#0#PHP" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/pets_owners_storage.install">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="691">
+          <caret line="99" column="36" selection-start-line="99" selection-start-column="36" selection-end-line="99" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.views.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="114" column="22" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.pages.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="94" column="3" selection-start-line="94" selection-start-column="3" selection-end-line="94" selection-end-column="3" />
+        <state relative-caret-position="456">
+          <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
           <folding>
-            <element signature="e#7#12#0#PHP" expanded="true" />
-            <element signature="n#pets_owners_storage_confirm_callback#0;n#!!top" expanded="false" />
-            <element signature="e#1229#1335#0#PHP" expanded="false" />
-            <element signature="e#1507#1559#0#PHP" expanded="false" />
-            <element signature="e#2173#2299#0#PHP" expanded="false" />
-            <element signature="e#2329#2486#0#PHP" expanded="false" />
+            <element signature="e#919#971#0#PHP" expanded="false" />
+            <element signature="e#1968#2125#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/pets_owners_storage.forms.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="767">
-          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+        <state relative-caret-position="178">
+          <caret line="201" column="50" selection-start-line="201" selection-start-column="50" selection-end-line="201" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/pets_owners_storage/includes/db/db.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="691">
+          <caret line="184" column="96" selection-start-line="184" selection-start-column="9" selection-end-line="184" selection-end-column="96" />
           <folding>
-            <element signature="e#7#43#0#PHP" expanded="false" />
-            <element signature="e#407#460#1#PHP" expanded="false" />
-            <element signature="e#521#676#1#PHP" expanded="false" />
-            <element signature="e#554#669#1#PHP" expanded="false" />
-            <element signature="e#714#1163#0#PHP" expanded="false" />
-            <element signature="e#891#943#1#PHP" expanded="false" />
-            <element signature="e#1004#1158#1#PHP" expanded="false" />
-            <element signature="e#1037#1152#1#PHP" expanded="false" />
-            <element signature="e#1301#1358#1#PHP" expanded="false" />
-            <element signature="e#1376#1613#1#PHP" expanded="false" />
-            <element signature="e#1389#1483#1#PHP" expanded="false" />
-            <element signature="e#1491#1607#1#PHP" expanded="false" />
-            <element signature="e#1639#1901#0#PHP" expanded="false" />
-            <element signature="e#1936#2001#0#PHP" expanded="false" />
-            <element signature="e#2023#2101#0#PHP" expanded="false" />
-            <element signature="e#2750#2957#0#PHP" expanded="false" />
-            <element signature="e#2961#3057#0#PHP" expanded="false" />
-            <marker date="1475494385752" expanded="false" signature="2483:2746" ph="..." />
+            <element signature="e#544#668#0#PHP" expanded="false" />
+            <element signature="e#1159#1279#0#PHP" expanded="false" />
+            <element signature="n#all_pets_owners_in_db#0;n#!!top" expanded="false" />
+            <element signature="e#1508#1595#0#PHP" expanded="false" />
+            <element signature="e#3460#3550#0#PHP" expanded="false" />
+            <element signature="n#get_all_terms_of_vocab#0;n#!!top" expanded="false" />
+            <element signature="e#3712#3782#0#PHP" expanded="false" />
+            <element signature="n#forms_date_to_timestamp#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>

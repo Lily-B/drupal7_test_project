@@ -81,4 +81,31 @@ function pets_owners_storage_update_7102() {
  */
 function pets_owners_storage_update_7103() {
   db_add_unique_key('pets_owners_storage', 'owner_key', ['first_name','last_name','birthday',]);
+
 }
+
+/**
+ * Add new fields (pet, birthday_timestamp) drop field(birthday) in table 'pets_owners_storage'.
+ */
+function pets_owners_storage_update_7104() {
+  db_add_field('pets_owners_storage', 'birthday_timestamp', [
+    'type' => 'int',
+    'size' => 'big',
+    'description' => "Pets owner's birthday Timestamp",
+    'unsigned' => FALSE,
+    'not null' => TRUE,//first add field with not null => false, set this field to previous users, than add not null
+  ]);
+  db_add_field('pets_owners_storage', 'pet', [
+    'type' => 'varchar',
+    'description' => "Pet category",
+    'length' => 20,
+    'not null' => TRUE,
+  ]);
+  db_drop_field('pets_owners_storage', 'birthday');
+}
+/**
+ * Add new field (birthday_timestamp) in table 'pets_owners_storage'.
+ */
+//function pets_owners_storage_update_7105() {
+//
+//}
