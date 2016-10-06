@@ -173,6 +173,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
       if (edit_pets_owner_in_db($id, $entry)) {
         drupal_set_message(t('Pets Owners data was edited successfully!'));
         cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+        cache_clear_all('pets_owners', 'cache_views_data', TRUE);
         drupal_goto('pets_owners_storage/pets_owners_page');
       }
       else {
@@ -187,12 +188,12 @@ function pets_owners_storage_form_submit($form, &$form_state) {
     if (add_new_pets_owner_in_db($entry)) {
       drupal_set_message(t('Pets owners data was added successfully!'));
       cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+      cache_clear_all('pets_owners', 'cache_views_data', TRUE);
     }
     else {
       drupal_set_message(t('Adding failed!'), 'error');
     };
   }
-
 }
 
 /**

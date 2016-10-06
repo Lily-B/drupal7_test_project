@@ -25,6 +25,7 @@ function pets_owners_storage_delete_callback($id) {
   if (user_access('access all pets owners table')) {
     delete_pet_owner_by_id($id);
     cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+    cache_clear_all('pets_owners', 'cache_views_data', TRUE);
   }
   else {
     drupal_access_denied();
@@ -38,15 +39,19 @@ function pets_owners_storage_delete_callback($id) {
  */
 function pets_owners_storage_admin_page() {
 
-//  cache_set('pets_owners_storage_data', 'Строка сохранённая в собственный сегмент кэша', 'cache_pets_owners_storage');
-//  cache_clear_all('pets_owners_storage_data', 'cache_pets_owners_storage', TRUE);
   $build = '';
-  if ($owners = all_pets_owners_in_db()) {
+//  if ($cache = cache_get('pets_owners_storage_owners' . pager_find_page(), 'cache_pets_owners_storage')) {
+//    $owners = $cache->data;
+//  }
+//  else{
+//    $owners = all_pets_owners_in_db();
+//    cache_set('pets_owners_storage_owners' . pager_find_page(), $owners, 'cache_pets_owners_storage');
+//  }
+
+  $owners = all_pets_owners_in_db();
+
+  if ($owners) {
     $rows = [];
-    $page=0;
-    if(isset($_GET['page'])){
-      $page=$_GET['page'];
-    }
     if ($cache = cache_get('pets_owners_storage_owners_table_rows_' . pager_find_page(), 'cache_pets_owners_storage')) {
       $rows = $cache->data;
     }
