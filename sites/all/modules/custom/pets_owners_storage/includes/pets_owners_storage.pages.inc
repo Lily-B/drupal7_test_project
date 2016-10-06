@@ -24,6 +24,7 @@ function pets_owners_storage_confirm_callback($id) {
 function pets_owners_storage_delete_callback($id) {
   if (user_access('access all pets owners table')) {
     delete_pet_owner_by_id($id);
+    cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
   }
   else {
     drupal_access_denied();
@@ -36,22 +37,37 @@ function pets_owners_storage_delete_callback($id) {
  * Render a list of entries in the database.
  */
 function pets_owners_storage_admin_page() {
+
+//  cache_set('pets_owners_storage_data', 'Строка сохранённая в собственный сегмент кэша', 'cache_pets_owners_storage');
+//  cache_clear_all('pets_owners_storage_data', 'cache_pets_owners_storage', TRUE);
   $build = '';
-  $pets = get_all_terms_of_vocab('pets');
   if ($owners = all_pets_owners_in_db()) {
-    $rows = array();
-    foreach ($owners as $owner) {
-      $rows[] = array(
-        $owner->id,
-        check_plain($owner->first_name),
-        check_plain($owner->last_name),
-        format_date($owner->birthday_timestamp,'custom', 'Y-m-d'),
-        check_plain($owner->email),
-        check_plain($owner->city),
-        $pets[$owner->pet],
-        l(t('Edit'), 'pets_owners_storage/pets_owners_form/' . $owner->id, array('attributes' => array('class' => 'edit-link'))),
-        l(t('Delete'), 'pets_owners_storage/confirm_delete/' . $owner->id, array('attributes' => array('class' => 'delete-link')))
-      );
+    $rows = [];
+    $page=0;
+    if(isset($_GET['page'])){
+      $page=$_GET['page'];
+    }
+    if ($cache = cache_get('pets_owners_storage_owners_table_rows_' . pager_find_page(), 'cache_pets_owners_storage')) {
+      $rows = $cache->data;
+    }
+    else {
+      $pets = get_all_terms_of_vocab('pets');
+
+      foreach ($owners as $owner) {
+        $rows[] = [
+          $owner->id,
+          check_plain($owner->first_name),
+          check_plain($owner->last_name),
+          format_date($owner->birthday_timestamp, 'custom', 'Y-m-d'),
+          check_plain($owner->email),
+          check_plain($owner->city),
+          $pets[$owner->pet],
+          l(t('Edit'), 'pets_owners_storage/pets_owners_form/' . $owner->id, array('attributes' => array('class' => 'edit-link'))),
+          l(t('Delete'), 'pets_owners_storage/confirm_delete/' . $owner->id, array('attributes' => array('class' => 'delete-link')))
+        ];
+      }
+      drupal_get_query_parameters();
+      cache_set('pets_owners_storage_owners_table_rows_' . pager_find_page(), $rows, 'cache_pets_owners_storage');
     }
     $header = array(
       t('Id'),
@@ -70,8 +86,6 @@ function pets_owners_storage_admin_page() {
       '#rows' => $rows,
       '#empty' => t('There are no date formats found in the db'),
     );
-
-
     // Attach the pager theme.
     $build['pager_pager'] = array('#theme' => 'pager');
     $build['pager_link'] = array(

@@ -63,3 +63,11 @@ function pets_owners_storage_permission() {
 function pets_owners_storage_views_api() {
   return array('api' => 3);
 }
+
+///**
+// * Implements hook_flush_caches().
+// */
+function pets_owners_storage_flush_caches() {
+  // Возвращаем имя собственного сегмента для очистки данных кэша в нём.
+  return array('cache_pets_owners_storage');
+}

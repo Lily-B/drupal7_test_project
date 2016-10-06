@@ -60,11 +60,14 @@ function pets_owners_storage_form($form, &$form_state) {
   $format = 'Y-m-d';
 
   $form['p_o']['date'] = array(
-    '#type' => 'date_select', // types 'date_text' and 'date_timezone' are also supported. See .inc file.
+    '#type' => 'date_select',
+    // types 'date_text' and 'date_timezone' are also supported. See .inc file.
     '#title' => t('select a date'),
     '#date_format' => $format,
-    '#date_label_position' => 'within', // See other available attributes and what they do in date_api_elements.inc
-    '#date_year_range' => '-50:now', // Optional, used to set the year range (back 3 years and forward 3 years is the default).
+    '#date_label_position' => 'within',
+    // See other available attributes and what they do in date_api_elements.inc
+    '#date_year_range' => '-50:now',
+    // Optional, used to set the year range (back 3 years and forward 3 years is the default).
   );
 
 
@@ -114,17 +117,17 @@ function pets_owners_storage_form($form, &$form_state) {
   if (isset($id)) {
     if (user_access('access all pets owners table')) {
       $owner = find_pet_owner_by_id($id);
-      $birthday_timestamp =$owner->birthday_timestamp;
-      $birthday_date = format_date($birthday_timestamp,'custom', 'Y-m-d');
-      $birthday_array = explode('-',$birthday_date);
+      $birthday_timestamp = $owner->birthday_timestamp;
+      $birthday_date = format_date($birthday_timestamp, 'custom', 'Y-m-d');
+      $birthday_array = explode('-', $birthday_date);
       $new_birthday_array = [
-        'year'=>intval($birthday_array[0]),
-        'month'=>intval($birthday_array[1]),
-        'day'=>intval($birthday_array[2]),
+        'year' => intval($birthday_array[0]),
+        'month' => intval($birthday_array[1]),
+        'day' => intval($birthday_array[2]),
       ];
       $form['p_o']['first_name']['#default_value'] = $owner->first_name;
       $form['p_o']['last_name']['#default_value'] = $owner->last_name;
-      $form['p_o']['birthday']['#default_value']= $new_birthday_array;
+      $form['p_o']['birthday']['#default_value'] = $new_birthday_array;
       $form['p_o']['pet']['#default_value'] = $owner->pet;
       $form['p_o']['email']['#default_value'] = $owner->email;
       $form['p_o']['city']['#default_value'] = $owner->city;
@@ -152,8 +155,8 @@ function pets_owners_storage_form_submit($form, &$form_state) {
   $new_email = trim($form_state['values']['email']);
   $new_fname = trim($form_state['values']['first_name']);
   $new_lname = trim($form_state['values']['last_name']);
-  $date_fields =$form_state['values']['birthday'];
-  $new_birthday =forms_date_to_timestamp($date_fields);
+  $date_fields = $form_state['values']['birthday'];
+  $new_birthday = forms_date_to_timestamp($date_fields);
   $new_pet = $form_state['values']['pet'];
   $new_city = trim($form_state['values']['city']);
   $entry = array(
@@ -169,6 +172,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
     if (user_access('access all pets owners table')) {
       if (edit_pets_owner_in_db($id, $entry)) {
         drupal_set_message(t('Pets Owners data was edited successfully!'));
+        cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
         drupal_goto('pets_owners_storage/pets_owners_page');
       }
       else {
@@ -182,6 +186,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
   else {
     if (add_new_pets_owner_in_db($entry)) {
       drupal_set_message(t('Pets owners data was added successfully!'));
+      cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
     }
     else {
       drupal_set_message(t('Adding failed!'), 'error');
@@ -199,7 +204,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
 function pets_owners_storage_form_validate($form, &$form_state) {
 
   //Add validation to check if  required fields are not null!!!
-  $date_fields =$form_state['values']['birthday'];
+  $date_fields = $form_state['values']['birthday'];
   $birth_timestamp = forms_date_to_timestamp($date_fields);
   $new_email = trim($form_state['values']['email']);
   $new_fname = trim($form_state['values']['first_name']);
@@ -210,7 +215,7 @@ function pets_owners_storage_form_validate($form, &$form_state) {
     form_set_error('birthday', t('Please enter a valid birthday date.'));
   }
 
-  if (!are_owner_names_and_birth_unique($id, $new_fname, $new_lname, $birth_timestamp)){
+  if (!are_owner_names_and_birth_unique($id, $new_fname, $new_lname, $birth_timestamp)) {
     form_set_error('birthday', t('Pets owner with this first name, last name and birthday already exists.'));
   }
 

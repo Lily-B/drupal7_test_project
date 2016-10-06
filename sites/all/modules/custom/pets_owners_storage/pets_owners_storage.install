@@ -104,8 +104,18 @@ function pets_owners_storage_update_7104() {
   db_drop_field('pets_owners_storage', 'birthday');
 }
 /**
- * Add new field (birthday_timestamp) in table 'pets_owners_storage'.
+ * Create new cache table using core cache schema
  */
-//function pets_owners_storage_update_7105() {
-//
-//}
+function pets_owners_storage_update_7105() {
+  $schema['cache_pets_owners_storage'] = drupal_get_schema_unprocessed('system', 'cache');
+  $schema['cache_pets_owners_storage']['description'] = 'Cache bin for the pets_owners_storage module';
+}
+
+/**
+ * Create new cache table using core cache schema
+ */
+function pets_owners_storage_update_7108() {
+  $schema['cache_pets_owners_storage'] = drupal_get_schema_unprocessed('system', 'cache');
+  $schema['cache_pets_owners_storage']['description'] = 'Cache bin for the pets_owners_storage module';
+  db_create_table('cache_pets_owners_storage', $schema['cache_pets_owners_storage']);
+}
