@@ -1,0 +1,8 @@
+core = "7.x"
+description = "Storage for pets owners"
+name = "Video Fields for Youtube"
+package = Custom Modules
+
+
+
+dependencies[] = schema

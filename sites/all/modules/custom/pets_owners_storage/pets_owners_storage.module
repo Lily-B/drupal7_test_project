@@ -15,14 +15,16 @@ function pets_owners_storage_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pets_owners_storage_form'),
     'access arguments' => array('access pets owners form'),
+    'type' => MENU_LOCAL_TASK,
   );
 
   $items['pets_owners_storage/pets_owners_page'] = array(
-    'title' => 'Pets owners',
+    'title' => 'Pets owners table',
     'description' => 'All pets owners in DB',
     'page callback' => 'pets_owners_storage_admin_page',
     'access arguments' => array('access all pets owners table'),
     'file' => 'includes/pets_owners_storage.pages.inc',
+    'type' => MENU_LOCAL_TASK,
   );
 
   $items['pets_owners_storage/delete_owner/%'] = array(
@@ -39,6 +41,25 @@ function pets_owners_storage_menu() {
     'file' => 'includes/pets_owners_storage.pages.inc',
   );
 
+  $items['pets_owners_storage'] = array(
+    'title' => 'Colored menu for pets owners storage module',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'pets_owners_storage_colored_menu_callback',
+    'access callback' => TRUE,
+    'file' => 'includes/pets_owners_storage.pages.inc',
+  );
+
+  $items['pets_owners_storage/info'] = array(
+    'title' => 'Colored Menu Info',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  $items['pets_owners_storage_colors'] = array(
+    'page callback' => 'pets_owners_storage_colors_callback',
+    'delivery callback' => 'ajax_deliver',
+    'access callback' => TRUE,
+    'file' => 'includes/pets_owners_storage.pages.inc',
+  );
   return $items;
 }
 
@@ -64,9 +85,9 @@ function pets_owners_storage_views_api() {
   return array('api' => 3);
 }
 
-///**
-// * Implements hook_flush_caches().
-// */
+/**
+ * Implements hook_flush_caches().
+ */
 function pets_owners_storage_flush_caches() {
   // Возвращаем имя собственного сегмента для очистки данных кэша в нём.
   return array('cache_pets_owners_storage');

@@ -1,0 +1,239 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: root
+ * Date: 11.10.16
+ * Time: 12:07
+ */
+
+/**
+ * Implements hook_field_info().
+ */
+function video_field_field_info() {
+  return array(
+    'video_field' => array(
+      'label' => t('Video'),
+      'description' => t("This field stores videos."),
+      'settings' => array(
+        'allowed_values' => array(),
+        'allowed_values_function' => ''
+      ),
+      'default_widget' => 'video_field',
+      'default_formatter' => 'video_window',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    ),
+  );
+}
+
+/**
+ * Implement hook_menu().
+ */
+function video_field_menu() {
+  $items = array();
+
+  $items['video_nodes'] = array(
+    'title' => 'All video nodes with controls',
+    'page callback' => 'video_nodes_callback',
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function video_field_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  global $user;
+
+  if ($field['type'] == 'video_field') {
+    foreach ($items as $delta => $item) {
+
+      if (!empty($item['video_url'])) {
+        if (!preg_match('/(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/', $item['video_url'])) {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'text_value',
+            'message' => t('%name: This field is only for youtube links.', array('%name' => $instance['label'])),
+          );
+        }
+      }
+    }
+
+  }
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function video_field_field_is_empty($item, $field) {
+  if ($field['type'] == 'video_field') {
+    return empty($item['video_url']);
+  }
+}
+
+/**
+ * Implements hook_field_settings_form
+ * @param $field
+ * @param $instance
+ * @param $has_data
+ * @return mixed
+ */
+function video_field_field_settings_form($field, $instance, $has_data) {
+  $settings = $field['settings'];
+  $form['video_borders'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show borders'),
+    '#default_value' => $settings['video_borders'],
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function video_field_field_widget_info() {
+  return array(
+    'video_field' => array(
+      'label' => t('Video field'),
+      'field types' => array('video_field'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function video_field_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+
+    case 'video_field':
+      $element['video_title'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Video title'),
+        '#default_value' => isset($items[$delta]['video_title']) ? $items[$delta]['video_title'] : '',
+      );
+      $element['video_url'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Video url'),
+        '#default_value' => isset($items[$delta]['video_url']) ? $items[$delta]['video_url'] : '',
+      );
+      $element['video_width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Video width'),
+        '#default_value' => isset($items[$delta]['video_width']) ? $items[$delta]['video_width'] : '',
+      );
+      $element['video_height'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Video height'),
+        '#default_value' => isset($items[$delta]['video_height']) ? $items[$delta]['video_height'] : '',
+      );
+      $element['video_controls'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Show video controls'),
+        '#default_value' => isset($items[$delta]['video_controls']) ? $items[$delta]['video_controls'] : '',
+      );
+
+      break;
+
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function video_field_field_formatter_info() {
+  return array(
+    'video_window' => array(
+      'label' => t('Video window'),
+      'field types' => array('video_field'),
+    ),
+    'video_link' => array(
+      'label' => t('Video link'),
+      'field types' => array('video_field'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function video_field_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $node = menu_get_object();
+
+
+  if (!empty($node)) {
+    switch ($display['type']) {
+      case 'video_window':
+        foreach ($items as $key => $item) {
+
+//          var_dump($field['settings']['video_borders']); exit();
+          $element[$key] = array(
+            '#type' => 'html_tag',
+            '#tag' => 'div',
+            '#value' => '<iframe width="' . $item['video_width']
+              . '" height="' . $item['video_height']
+              . '" src="' . str_replace('watch?v=', 'embed/', $item['video_url']) . "?controls=" . $item['video_controls']
+              . '" frameborder="' . $field['settings']['video_borders'] . '" allowfullscreen></iframe>',
+          );
+        }
+        break;
+      case 'video_link':
+
+        foreach ($items as $key => $item) {
+          $element[$key] = array(
+            '#type' => 'link',
+            '#title' => $item['video_title'],
+            '#href' => $item['video_url'],
+            '#attributes' => array(
+              'target' => '_blank',
+            ),
+          );
+        }
+        break;
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_form_alter()
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function video_field_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == "field_ui_field_edit_form") {
+    $form['field']['cardinality']['#options'] = array(FIELD_CARDINALITY_UNLIMITED => t('Unlimited')) + drupal_map_assoc(range(1, 5));
+  }
+}
+
+/**
+ * @return string
+ */
+function video_nodes_callback() {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', array('video', 'page'))
+    ->fieldCondition('field_youtube_video', 'video_controls', 1 , '=');
+  $result = $query->execute();
+  $output = '';
+  if (isset($result['node'])) {
+    $items_nids = array_keys($result['node']);
+    $items_with_video = entity_load('node', $items_nids);
+    foreach ($items_with_video as $item){
+      foreach($item->field_youtube_video['und'] as $video){
+        if($video['video_controls'] == '1'){
+          $output .= 'Video ';
+          $output .= l(t($video['video_title']), $video['video_url'], array('attributes' => array('target' => '_blank')));
+          $output .= ' in ' . $item->type . ' ' . $item->title;
+          $output .= '<br>';
+        }
+      }
+    }
+  }
+  return $output;
+}
+

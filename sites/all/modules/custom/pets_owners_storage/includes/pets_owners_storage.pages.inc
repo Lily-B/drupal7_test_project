@@ -104,3 +104,33 @@ function pets_owners_storage_admin_page() {
   return $build;
 }
 
+/**
+ * Color menu item callback;
+ * @return string
+ */
+function pets_owners_storage_colored_menu_callback() {
+  drupal_add_js('misc/ajax.js');
+  drupal_add_js(drupal_get_path('module', 'pets_owners_storage') . '/includes/js/colored_menu.js');
+  return 'My colored Menu';
+}
+
+function pets_owners_storage_colors_callback() {
+//  drupal_add_js('misc/ajax.js');
+//  drupal_add_js(drupal_get_path('module', 'pets_owners_storage') . '/includes/js/colored_menu.js');
+  $red = rand(0, 200);
+  $green = rand(0, 200);
+  $blue = rand(0, 200);
+  $color_rgba = 'rgba(' . $red . ',' . $green . ',' . $blue . ',0.3';
+
+  $response =array(
+    '#type' => 'ajax',
+    '#commands' => array(
+      array(
+        'command' => 'new_color',
+        'color' => $color_rgba,
+      ),
+    ),
+  );
+
+  return $response;
+}

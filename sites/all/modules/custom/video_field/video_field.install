@@ -1,0 +1,52 @@
+<?php
+/**
+ * @file
+ *  This file contains the schema for the video_field module.
+ */
+
+/**
+ * Implements hook_field_schema().
+ */
+function video_field_field_schema($field) {
+  return array(
+    'columns' => array(
+      'video_id' => array(
+        'description' => 'The primary identifier for a video.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'video_title' => array(
+        'type' => 'varchar',
+        'length' => '2048',
+        'not null' => TRUE,
+      ),
+      'video_url' => array(
+        'type' => 'varchar',
+        'length' => '2048',
+        'not null' => FALSE,
+      ),
+      'video_width' => array(
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'video_height' => array(
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'video_controls' => array(
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'video_id' => array('video_id'),
+    ),
+  );
+}
