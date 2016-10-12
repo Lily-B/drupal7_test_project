@@ -20,7 +20,6 @@ function video_field_field_info() {
       ),
       'default_widget' => 'video_field',
       'default_formatter' => 'video_window',
-      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
     ),
   );
 }
@@ -35,6 +34,7 @@ function video_field_menu() {
     'title' => 'All video nodes with controls',
     'page callback' => 'video_nodes_callback',
     'access callback' => TRUE,
+    'file' => 'includes/video_field.pages.inc',
   );
   return $items;
 }
@@ -47,17 +47,13 @@ function video_field_field_validate($entity_type, $entity, $field, $instance, $l
 
   if ($field['type'] == 'video_field') {
     foreach ($items as $delta => $item) {
-
-      if (!empty($item['video_url'])) {
-        if (!preg_match('/(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/', $item['video_url'])) {
-          $errors[$field['field_name']][$langcode][$delta][] = array(
-            'error' => 'text_value',
-            'message' => t('%name: This field is only for youtube links.', array('%name' => $instance['label'])),
-          );
-        }
+      if (!_video_url_is_valid($item['video_url'])) {
+        $errors[$field['field_name']][$langcode][$delta][] = array(
+          'error' => 'video_url',
+          'message' => t('%name: This field is only for youtube links.', array('%name' => $instance['label'])),
+        );
       }
     }
-
   }
 }
 
@@ -104,7 +100,6 @@ function video_field_field_widget_info() {
  */
 function video_field_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
   switch ($instance['widget']['type']) {
-
     case 'video_field':
       $element['video_title'] = array(
         '#type' => 'textfield',
@@ -131,9 +126,7 @@ function video_field_field_widget_form(&$form, &$form_state, $field, $instance, 
         '#title' => t('Show video controls'),
         '#default_value' => isset($items[$delta]['video_controls']) ? $items[$delta]['video_controls'] : '',
       );
-
       break;
-
   }
 
   return $element;
@@ -160,22 +153,20 @@ function video_field_field_formatter_info() {
  */
 function video_field_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
-  $node = menu_get_object();
+//  $node = menu_get_object();
 
 
-  if (!empty($node)) {
+  if (!empty($items)) {
     switch ($display['type']) {
       case 'video_window':
         foreach ($items as $key => $item) {
-
-//          var_dump($field['settings']['video_borders']); exit();
           $element[$key] = array(
-            '#type' => 'html_tag',
-            '#tag' => 'div',
-            '#value' => '<iframe width="' . $item['video_width']
-              . '" height="' . $item['video_height']
-              . '" src="' . str_replace('watch?v=', 'embed/', $item['video_url']) . "?controls=" . $item['video_controls']
-              . '" frameborder="' . $field['settings']['video_borders'] . '" allowfullscreen></iframe>',
+            'is_iframe' => TRUE,
+            'url' => _iframe_url_for($item['video_url']),
+            'width' => $item['video_width'],
+            'height' => $item['video_height'],
+            'controls' => $item['video_controls'],
+            'frameborder' => $field['settings']['video_borders'],
           );
         }
         break;
@@ -183,12 +174,12 @@ function video_field_field_formatter_view($entity_type, $entity, $field, $instan
 
         foreach ($items as $key => $item) {
           $element[$key] = array(
-            '#type' => 'link',
-            '#title' => $item['video_title'],
-            '#href' => $item['video_url'],
-            '#attributes' => array(
-              'target' => '_blank',
-            ),
+            'is_iframe' => FALSE,
+            'url' => str_replace('embed/', 'watch?v=', $item['video_url']),
+            'width' => $item['video_width'],
+            'height' => $item['video_height'],
+            'controls' => $item['video_controls'],
+            'title' => $item['video_title'],
           );
         }
         break;
@@ -206,34 +197,36 @@ function video_field_field_formatter_view($entity_type, $entity, $field, $instan
  */
 function video_field_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == "field_ui_field_edit_form") {
-    $form['field']['cardinality']['#options'] = array(FIELD_CARDINALITY_UNLIMITED => t('Unlimited')) + drupal_map_assoc(range(1, 5));
+    $form['field']['cardinality']['#options'] = [FIELD_CARDINALITY_UNLIMITED => t('Unlimited')] + drupal_map_assoc(range(1, 5));
   }
 }
 
 /**
- * @return string
+ * Shows if the url is youtube url
+ * @param $url_string
+ * @return bool
  */
-function video_nodes_callback() {
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', array('video', 'page'))
-    ->fieldCondition('field_youtube_video', 'video_controls', 1 , '=');
-  $result = $query->execute();
-  $output = '';
-  if (isset($result['node'])) {
-    $items_nids = array_keys($result['node']);
-    $items_with_video = entity_load('node', $items_nids);
-    foreach ($items_with_video as $item){
-      foreach($item->field_youtube_video['und'] as $video){
-        if($video['video_controls'] == '1'){
-          $output .= 'Video ';
-          $output .= l(t($video['video_title']), $video['video_url'], array('attributes' => array('target' => '_blank')));
-          $output .= ' in ' . $item->type . ' ' . $item->title;
-          $output .= '<br>';
-        }
-      }
-    }
+function _video_url_is_valid($url_string) {
+  $rx = '~
+    ^(?:https?://)?                                             # Optional protocol
+     (?:www\.)?                                                 # Optional subdomain
+     (?:youtube\.com/watch\?v=|youtube\.com/embed/|youtu\.be/)  # Mandatory domain names
+     ([^&]+)                                                    # URI with video id as capture group 
+     ~x';
+  if (!empty($url_string) && !preg_match($rx, $url_string)) {
+    return FALSE;
   }
-  return $output;
+  return TRUE;
+}
+
+/**
+ * Makes youtube url iframe url
+ * @param $youtube_url
+ * @return mixed
+ */
+function _iframe_url_for($youtube_url) {
+  $iframe_video_url = str_replace('youtu.be/', 'youtube.com/embed/', $youtube_url);
+  $iframe_video_url = str_replace('watch?v=', 'embed/', $iframe_video_url);
+  return $iframe_video_url;
 }
 

@@ -114,9 +114,11 @@ function pets_owners_storage_colored_menu_callback() {
   return 'My colored Menu';
 }
 
+/**
+ * function for ajax colored menu
+ * @return array
+ */
 function pets_owners_storage_colors_callback() {
-//  drupal_add_js('misc/ajax.js');
-//  drupal_add_js(drupal_get_path('module', 'pets_owners_storage') . '/includes/js/colored_menu.js');
   $red = rand(0, 200);
   $green = rand(0, 200);
   $blue = rand(0, 200);

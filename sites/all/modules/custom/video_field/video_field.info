@@ -3,6 +3,7 @@ description = "Storage for pets owners"
 name = "Video Fields for Youtube"
 package = Custom Modules
 
-
+files[] = includes/video_field.pages.inc
+files[] = field--field_youtube_video.tpl.php
 
 dependencies[] = schema
