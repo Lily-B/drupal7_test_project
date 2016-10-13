@@ -1,0 +1,8 @@
+core = "7.x"
+description = "new module"
+name = "New Batch"
+package = Custom Modules
+
+files[] = includes/custom_fapi_validation_rules.inc
+
+dependencies[] = pets_owners_storage

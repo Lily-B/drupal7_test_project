@@ -1,0 +1,92 @@
+<?php
+
+module_load_include('inc', 'new_batch', 'includes/custom_fapi_validation_rules');
+/**
+ * Implement hook_menu().
+ */
+function new_batch_menu() {
+  $items = array();
+
+  $items['change_name_form'] = array(
+    'title' => 'Change name form',
+    'description' => 'Form for changing pets owners names',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('new_batch_change_name_form'),
+    'access arguments' => array('access form content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Custom subscription form.
+ */
+function new_batch_change_name_form($form, &$form_state) {
+
+  $form['old_first_name'] = [
+    '#title' => t('Old Name'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => [
+      'placeholder' => t('Old Name '),
+    ],
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#rules' => [
+      'alpha_dash',
+      [
+        'rule' => 'length[1,20]',
+        'error' => t('Please, enter a shorter than 20 char name.')
+      ],
+    ],
+  ];
+
+  $form['new_first_name'] = [
+    '#title' => t('New Name'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#attributes' => [
+      'placeholder' => t('New Name '),
+    ],
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#rules' => [
+      'alpha_dash',
+      [
+        'rule' => 'length[1,20]',
+        'error' => t('Please, enter a shorter than 20 char name.')
+      ],
+    ],
+  ];
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Change!'),
+  );
+  return $form;
+}
+
+/**
+ * Implement hook_form_submit().
+ * @param $form
+ * @param $form_state
+ */
+function new_batch_change_name_form_submit($form, &$form_state) {
+
+
+  drupal_set_message(t('Success!'));
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function new_batch_permission() {
+  return array(
+    'access form content' => array(
+      'title' => t('Access content for the New Batch module'),
+    )
+  );
+}
+
+

@@ -1,0 +1,7 @@
+core = "7.x"
+description = "Batch for pets owners renaming"
+name = "Batch for pets"
+package = Custom Modules
+
+
+dependencies[] = pets_owners_storage
