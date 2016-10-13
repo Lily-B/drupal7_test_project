@@ -153,36 +153,31 @@ function video_field_field_formatter_info() {
  */
 function video_field_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
-//  $node = menu_get_object();
-
 
   if (!empty($items)) {
-    switch ($display['type']) {
-      case 'video_window':
-        foreach ($items as $key => $item) {
-          $element[$key] = array(
+    foreach ($items as $key => $item) {
+      switch ($display['type']) {
+        case 'video_window':
+          $element[$key] = [
             'is_iframe' => TRUE,
             'url' => _iframe_url_for($item['video_url']),
             'width' => $item['video_width'],
             'height' => $item['video_height'],
             'controls' => $item['video_controls'],
             'frameborder' => $field['settings']['video_borders'],
-          );
-        }
+          ];
         break;
-      case 'video_link':
-
-        foreach ($items as $key => $item) {
-          $element[$key] = array(
+        case 'video_link':
+          $element[$key] = [
             'is_iframe' => FALSE,
             'url' => str_replace('embed/', 'watch?v=', $item['video_url']),
             'width' => $item['video_width'],
             'height' => $item['video_height'],
             'controls' => $item['video_controls'],
             'title' => $item['video_title'],
-          );
-        }
+          ];
         break;
+      }
     }
   }
 

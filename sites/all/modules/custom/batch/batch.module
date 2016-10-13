@@ -1,0 +1,38 @@
+<?php
+
+module_load_include('inc', 'batch', 'includes/batch.forms');
+
+/**
+ * Implement hook_menu().
+ */
+function batch_menu() {
+  $items = array();
+
+  $items['batch/batch_change_name_form'] = array(
+    'title' => 'Change names form',
+    'description' => 'Change names form',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('batch_change_name_form'),
+    'access arguments' => array('batch access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function batch_permission() {
+  return array(
+    'batch access content' => array(
+      'title' => t('Access form for changing name of pets owner in pets_owners_storage module.'),
+    ),
+  );
+}
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+core = "7.x"
+description = "Custom batch module"
+name = "Batch"
+package = Custom Modules

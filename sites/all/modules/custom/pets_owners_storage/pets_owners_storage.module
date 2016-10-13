@@ -92,3 +92,34 @@ function pets_owners_storage_flush_caches() {
   // Возвращаем имя собственного сегмента для очистки данных кэша в нём.
   return array('cache_pets_owners_storage');
 }
+
+///**
+// * Implements hook_cron().
+// */
+//function pets_owners_storage_cron() {
+//  $result = db_query('SELECT title,nid FROM {node}');
+//  $queue = DrupalQueue::get('rename');
+//  foreach ($result as $hf_info) {
+//    $queue->createItem($hf_info);
+//  }
+//}
+//
+///**
+// * Implements hook_cron_queue_info().
+// */
+//function pets_owners_storage_cron_queue_info() {
+//  $queues['rename'] = array(
+//    'worker callback' => 'namer',
+//    'time' => 120,
+//  );
+//  return $queues;
+//}
+//
+//function namer($data){
+//  $result = db_update('node')
+//    ->fields(array('title' => $data->title . 'abc'))
+//    ->condition('nid', $data->nid)
+//    ->execute();
+//}
+
+

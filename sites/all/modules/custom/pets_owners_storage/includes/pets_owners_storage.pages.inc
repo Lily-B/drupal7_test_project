@@ -119,6 +119,7 @@ function pets_owners_storage_colored_menu_callback() {
  * @return array
  */
 function pets_owners_storage_colors_callback() {
+
   $red = rand(0, 200);
   $green = rand(0, 200);
   $blue = rand(0, 200);
