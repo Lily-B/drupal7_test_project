@@ -1,5 +1,5 @@
 core = "7.x"
-description = "new module"
+description = "Module with batch example and cron task for unpublishing nodes"
 name = "New Batch"
 package = Custom Modules
 
