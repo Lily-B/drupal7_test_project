@@ -159,7 +159,7 @@ function pets_owners_storage_form_submit($form, &$form_state) {
   $new_birthday = forms_date_to_timestamp($date_fields);
   $new_pet = $form_state['values']['pet'];
   $new_city = trim($form_state['values']['city']);
-  $entry = array(
+  $fields = array(
     'first_name' => $new_fname,
     'last_name' => $new_lname,
     'email' => $new_email,
@@ -168,31 +168,58 @@ function pets_owners_storage_form_submit($form, &$form_state) {
     'city' => $new_city,
   );
 
+//  if (isset($id)) {
+//    if (user_access('access all pets owners table')) {
+//      if (edit_pets_owner_in_db($id, $entry)) {
+//        drupal_set_message(t('Pets Owners data was edited successfully!'));
+//        cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+//        cache_clear_all('pets_owners', 'cache_views_data', TRUE);
+//        drupal_goto('pets_owners_storage/pets_owners_page');
+//      }
+//      else {
+//        drupal_set_message(t('Editing failed!'), 'error');
+//      }
+//    }
+//    else {
+//      drupal_access_denied();
+//    };
+//  }
+//  else {
+//    if (add_new_pets_owner_in_db($entry)) {
+//      drupal_set_message(t('Pets owners data was added successfully!'));
+//      cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+//      cache_clear_all('pets_owners', 'cache_views_data', TRUE);
+//    }
+//    else {
+//      drupal_set_message(t('Adding failed!'), 'error');
+//    };
+//  }
+
+  $queue = DrupalQueue::get('pets_owners_storage_submit');
+  // There is no harm in trying to recreate existing.
+  $queue->createQueue();
+
   if (isset($id)) {
     if (user_access('access all pets owners table')) {
-      if (edit_pets_owner_in_db($id, $entry)) {
-        drupal_set_message(t('Pets Owners data was edited successfully!'));
-        cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
-        cache_clear_all('pets_owners', 'cache_views_data', TRUE);
-        drupal_goto('pets_owners_storage/pets_owners_page');
-      }
-      else {
-        drupal_set_message(t('Editing failed!'), 'error');
-      }
+      //Edit
+      $row = ['fields' => $fields, 'id' =>$id];
+      $queue = DrupalQueue::get('pets_owners_storage_edit');
+      $queue->createQueue();
+      $queue->createItem($row);
+      $count = $queue->numberOfItems();
+      drupal_set_message(t('There are now ' . $count . ' user(s) to edit.'));
     }
     else {
       drupal_access_denied();
     };
   }
   else {
-    if (add_new_pets_owner_in_db($entry)) {
-      drupal_set_message(t('Pets owners data was added successfully!'));
-      cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
-      cache_clear_all('pets_owners', 'cache_views_data', TRUE);
-    }
-    else {
-      drupal_set_message(t('Adding failed!'), 'error');
-    };
+    //Add
+    $queue = DrupalQueue::get('pets_owners_storage_add');
+    $queue->createQueue();
+    $queue->createItem($fields);
+    $count = $queue->numberOfItems();
+    drupal_set_message(t('There are now ' . $count . ' user(s) to add.'));
   }
 }
 
@@ -234,6 +261,37 @@ function pets_owners_storage_form_validate($form, &$form_state) {
   };
 
 }
+
+/**
+ * Cron task callback ('worker callback') for 'pets_owners_storage_edit' Queue
+ * @param $row
+ */
+function edit_pet_owner($row) {
+  if (edit_pets_owner_in_db($row['id'], $row['fields'])) {
+    drupal_set_message(t('Pets Owners data was edited successfully!'));
+    cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+    cache_clear_all('pets_owners', 'cache_views_data', TRUE);
+  }
+  else {
+    drupal_set_message(t('Editing failed!'), 'error');
+  }
+}
+
+/**
+ * Cron task callback ('worker callback') for 'pets_owners_storage_add' Queue
+ * @param $fields
+ */
+function add_pet_owner($fields) {
+  if (add_new_pets_owner_in_db($fields)) {
+    drupal_set_message(t('Pets owners data was added successfully!'));
+    cache_clear_all('pets_owners_storage_owners_table_rows_', 'cache_pets_owners_storage', TRUE);
+    cache_clear_all('pets_owners', 'cache_views_data', TRUE);
+  }
+  else {
+    drupal_set_message(t('Adding failed!'), 'error');
+  };
+}
+
 
 
 

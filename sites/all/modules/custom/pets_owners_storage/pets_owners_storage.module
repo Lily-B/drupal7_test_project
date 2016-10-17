@@ -92,3 +92,18 @@ function pets_owners_storage_flush_caches() {
   // Возвращаем имя собственного сегмента для очистки данных кэша в нём.
   return array('cache_pets_owners_storage');
 }
+
+/*
+* Implements hook_cron_queue_info().
+*/
+function pets_owners_storage_cron_queue_info() {
+  $queues['pets_owners_storage_edit'] = array(
+    'worker callback' => 'edit_pet_owner',
+    'time' => 60,
+  );
+  $queues['pets_owners_storage_add'] = array(
+    'worker callback' => 'add_pet_owner',
+    'time' => 60,
+  );
+  return $queues;
+}

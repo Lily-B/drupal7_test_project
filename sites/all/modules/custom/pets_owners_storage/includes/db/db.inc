@@ -47,7 +47,6 @@ function email_exists_in_db($email) {
 
 /**
  * Select all pets owners from db and Return the result in object format
- * @param array $entry
  * @return mixed
  */
 function all_pets_owners_in_db() {
@@ -88,13 +87,13 @@ function find_pet_owner_by_id($id) {
 /**
  * Edits row in pets_owners_storage table by id
  * @param $id
- * @param $entry
+ * @param $fields
  * @return bool
  */
-function edit_pets_owner_in_db($id, $entry) {
+function edit_pets_owner_in_db($id, $fields) {
   try {
     db_update('pets_owners_storage')
-      ->fields($entry)
+      ->fields($fields)
       ->condition('id', $id)
       ->execute();
     return TRUE;
