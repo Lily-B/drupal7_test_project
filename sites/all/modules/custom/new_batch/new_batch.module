@@ -29,35 +29,45 @@ function new_batch_permission() {
   );
 }
 
-
 /*
 * Implements hook_cron().
 */
 function new_batch_cron() {
-  $result = db_query('SELECT title,nid FROM {node}');
-$queue = DrupalQueue::get('change_titles');
-foreach ($result as $title_node) {
-  $queue->createItem($title_node);
-}
+  $nodes = node_load_multiple([], ['status' => 1, 'type' => 'article']);
+  $queue = DrupalQueue::get('unpublish_old');
+  foreach ($nodes as $node_to_change) {
+    $queue->createItem($node_to_change);
+  }
 }
 
 /*
 * Implements hook_cron_queue_info().
 */
 function new_batch_cron_queue_info() {
-  $queues['change_titles'] = array(
-    'worker callback' => 'change_title',
+  $queues['unpublish_old'] = array(
+    'worker callback' => 'unpublish',
     'time' => 120,
   );
   return $queues;
 }
 
-function change_title($data) {
-  $result = db_update('node')
-    ->fields(array('title' => str_replace('hicron', '', $data->title)))
-//    ->fields(array(title => $data->title . 'hicron'))
-    ->condition('nid', $data->nid)
-    ->execute();
+/**
+ * Compares changed date of node with $unpublish_date and unpublish node if
+ * it was last updated earlier
+ * @param $data
+ */
+function unpublish($data) {
+
+//  $unpublish_date = strtotime("- 2 days");
+  $unpublish_date = strtotime("- 1800 seconds");
+  // load the node object
+  $node = node_load($data->nid);
+  $last_update = $data->changed;
+  if ($last_update < $unpublish_date) {
+    $node->status = 0;
+    //resave node
+    node_save($node);
+  }
 }
 
 
