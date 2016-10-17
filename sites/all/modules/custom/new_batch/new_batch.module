@@ -1,6 +1,7 @@
 <?php
 
 module_load_include('inc', 'new_batch', 'includes/custom_fapi_validation_rules');
+module_load_include('inc', 'new_batch', 'includes/new_batch.forms');
 /**
  * Implement hook_menu().
  */
@@ -19,66 +20,6 @@ function new_batch_menu() {
 }
 
 /**
- * Custom subscription form.
- */
-function new_batch_change_name_form($form, &$form_state) {
-
-  $form['old_first_name'] = [
-    '#title' => t('Old Name'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#attributes' => [
-      'placeholder' => t('Old Name '),
-    ],
-    '#size' => 20,
-    '#maxlength' => 20,
-    '#rules' => [
-      'alpha_dash',
-      [
-        'rule' => 'length[1,20]',
-        'error' => t('Please, enter a shorter than 20 char name.')
-      ],
-    ],
-  ];
-
-  $form['new_first_name'] = [
-    '#title' => t('New Name'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#attributes' => [
-      'placeholder' => t('New Name '),
-    ],
-    '#size' => 20,
-    '#maxlength' => 20,
-    '#rules' => [
-      'alpha_dash',
-      [
-        'rule' => 'length[1,20]',
-        'error' => t('Please, enter a shorter than 20 char name.')
-      ],
-    ],
-  ];
-
-  $form['submit_button'] = array(
-    '#type' => 'submit',
-    '#value' => t('Change!'),
-  );
-  return $form;
-}
-
-/**
- * Implement hook_form_submit().
- * @param $form
- * @param $form_state
- */
-function new_batch_change_name_form_submit($form, &$form_state) {
-
-
-  drupal_set_message(t('Success!'));
-}
-
-
-/**
  * Implements hook_permission().
  */
 function new_batch_permission() {
@@ -88,5 +29,37 @@ function new_batch_permission() {
     )
   );
 }
+
+
+/*
+* Implements hook_cron().
+*/
+function new_batch_cron() {
+  $result = db_query('SELECT title,nid FROM {node}');
+$queue = DrupalQueue::get('change_titles');
+foreach ($result as $title_node) {
+  $queue->createItem($title_node);
+}
+}
+
+/*
+* Implements hook_cron_queue_info().
+*/
+function new_batch_cron_queue_info() {
+  $queues['change_titles'] = array(
+    'worker callback' => 'change_title',
+    'time' => 120,
+  );
+  return $queues;
+}
+
+function change_title($data) {
+  $result = db_update(node)
+    ->fields(array(title => str_replace('hicron', '', $data->title)))
+//    ->fields(array(title => $data->title . 'hicron'))
+    ->condition(nid, $data->nid)
+    ->execute();
+}
+
 
 
