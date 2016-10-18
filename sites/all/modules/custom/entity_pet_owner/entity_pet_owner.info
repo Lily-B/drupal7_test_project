@@ -1,0 +1,12 @@
+core = "7.x"
+description = "Entity for pet owners"
+name = "Entity Pet Owner"
+package = Custom Modules
+
+
+
+
+dependencies[] = schema
+dependencies[] = ctools
+dependencies[] = views
+dependencies[] = entity

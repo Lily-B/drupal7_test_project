@@ -12,3 +12,4 @@ dependencies[] = fapi_validation
 dependencies[] = schema
 dependencies[] = ctools
 dependencies[] = views
+dependencies[] = entity

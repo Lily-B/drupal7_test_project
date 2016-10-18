@@ -34,8 +34,9 @@ function new_batch_permission() {
 */
 function new_batch_cron() {
   $nodes = node_load_multiple([], ['status' => 1, 'type' => 'article']);
-  $nodes_total = count($nodes);
+
   $queue = DrupalQueue::get('unpublish_old');
+
   foreach ($nodes as $node_to_change) {
     $queue->createItem($node_to_change);
   }
@@ -59,8 +60,8 @@ function new_batch_cron_queue_info() {
  */
 function unpublish($data) {
 
-//  $unpublish_date = strtotime("- 2 days");
-  $unpublish_date = strtotime("- 1800 seconds");
+  $unpublish_date = strtotime("- 2 days");
+//  $unpublish_date = strtotime("- 1800 seconds");
   // load the node object
   $node = node_load($data->nid);
   $last_update = $data->changed;

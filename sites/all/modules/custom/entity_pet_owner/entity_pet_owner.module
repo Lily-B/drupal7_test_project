@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * Implement hook_menu().
+ */
+function entity_pet_owner_menu() {
+  $items = array();
+
+  $items['entity_pet_owner/entity'] = array(
+    'title' => 'Pet owners Entities',
+    'description' => 'Shows Pet owners Entities',
+    'page callback' => 'entity_pet_owner_entity_page',
+    'access arguments' => array('access content'),
+    'file' => 'entity_pet_owner.pages.inc',
+  );
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function entity_pet_owner_permission() {
+  return array(
+    'access content' => array(
+      'title' => t('Access content in entity_pet_owner module.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_entity_info().
+ */
+function entity_pet_owner_entity_info() {
+
+  $info = array();
+
+  $info['pet_owner'] = array(
+    'label' => t('Pet Owner'),
+    'base table' => 'pets_owners_storage',
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'first_name',
+    ),
+    'translation' => TRUE,
+    'module' => 'entity_pet_owner',
+    'entity class' => 'Entity',
+//    'controller class' => 'PetOwnerEntityController',
+    'controller class' => 'EntityAPIControllerExportable',
+    'exportable' => TRUE,
+  );
+
+  return $info;
+}
+
+/**
+ * Extending the EntityAPIController for the pet_owner entity.
+ */
+class PetOwnerEntityController extends EntityAPIController {
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+
+    $build = parent::buildContent($entity, $view_mode, $langcode, $content);
+
+// Our additions to the $build render array
+    $build['first_name'] = array(
+      '#type' => 'markup',
+      '#markup' => check_plain($entity->first_name),
+      '#prefix' => '<div class="pet_owner-name">',
+      '#suffix' => '</div>',
+    );
+    $build['birthday_timestamp'] = array(
+      '#type' => 'markup',
+      '#markup' => date('d F, Y', check_plain($entity->birthday_timestamp)),
+      '#prefix' => '<p>Birthday: ',
+      '#suffix' => '</p>',
+    );
+    return $build;
+
+  }
+}

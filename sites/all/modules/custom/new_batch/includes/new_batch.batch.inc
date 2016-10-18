@@ -7,20 +7,14 @@
  */
 function name_changer_process_row($rows, $new_name, &$context) {
 
-  // Количество материалов, которые будут обработаны одной пачкой за раз
   $limit = 50;
 
-  // Задаём начальные значения для батча
   if (empty($context['sandbox']['progress'])) {
-    // Текущее количество обработанных материалов
 
     $context['sandbox']['progress'] = 0;
-    // Общее количество материалов, которые надо обработать
     $context['sandbox']['max'] = count($rows);
   }
 
-  // Сохраняем массив с материалами
-  // Далее этот массив будет меняться
   if (empty($context['sandbox']['items'])) {
     $context['sandbox']['items'] = $rows;
   }
@@ -28,7 +22,6 @@ function name_changer_process_row($rows, $new_name, &$context) {
   $counter = 0;
   if (!empty($context['sandbox']['items'])) {
 
-    // Убираем из массива с данными уже обработанные материалы
     if ($context['sandbox']['progress'] != 0) {
       array_splice($context['sandbox']['items'], 0, $limit);
     }
