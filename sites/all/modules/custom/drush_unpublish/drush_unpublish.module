@@ -1,0 +1,54 @@
+<?php
+/**
+ * Example function.
+ * @param null $type
+ */
+function drush_unpublish($type = NULL) {
+
+  $unpublish_date = strtotime("- 2 days");
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->propertyCondition('type', $type)
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyCondition('changed', $unpublish_date, '<');
+  $result = $query->execute();
+  $nodes = $result['node'];
+
+  drupal_set_message(print_r($nodes), 'success');
+
+  $queue = DrupalQueue::get('unpublish_old_nodes');
+
+  $queue_items = 0;
+
+  foreach ($nodes as $node_to_change) {
+    $queue->createItem($node_to_change->nid);
+    $queue_items++;
+  }
+  drupal_set_message(t($queue_items . ' Old nodes of type ' . $type . ' were added to Cron Queue.'), 'success');
+}
+
+
+/*
+* Implements hook_cron_queue_info().
+*/
+function drush_unpublish_cron_queue_info() {
+  $queues['unpublish_old_nodes'] = array(
+    'worker callback' => 'drush_unpublish_unpublish',
+    'time' => 60,
+  );
+  return $queues;
+}
+
+/**
+ * Compares changed date of node with $unpublish_date and unpublish node if
+ * it was last updated earlier
+ * @param $nid
+ */
+function drush_unpublish_unpublish($nid) {
+  // load the node object
+  $node = node_load($nid);
+  $node->status = 0;
+  //resave node
+  node_save($node);
+}
