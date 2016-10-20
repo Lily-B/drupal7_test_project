@@ -1,10 +1,19 @@
 <?php
 
+
 /**
  * Implement hook_menu().
  */
 function entity_pet_owner_menu() {
   $items = array();
+
+  $items['entity_pet_owner/%'] = array(
+    'title' => 'Pet owners Entities',
+    'page callback' => 'entity_pet_owner_callback',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'file' => 'entity_pet_owner.pages.inc',
+  );
 
   $items['entity_pet_owner/entity'] = array(
     'title' => 'Pet owners Entities',
@@ -38,17 +47,47 @@ function entity_pet_owner_entity_info() {
 
   $info['pet_owner'] = array(
     'label' => t('Pet Owner'),
-    'base table' => 'pets_owners_storage',
+    'base table' => 'entity_pet_owner',
     'entity keys' => array(
       'id' => 'id',
       'label' => 'first_name',
+      'language' => 'language',
     ),
-    'translation' => TRUE,
+    'translation' => array(
+      'entity_translation' => array(
+        'class' => 'EntityTranslationDefaultHandler',
+        'default settings' => array(
+          'default_language' => LANGUAGE_NONE,
+          'hide_language_selector' => FALSE,
+        ),
+        'base path' => 'admin/entity_pet_owner/manage/%',
+        'translate path' => 'admin/entity_pet_owner/manage/%/translate',
+        'path wildcard' => '%',
+        'access callback' => 'entity_pet_owner_translation_tab_access'
+      ),
+    ),
     'module' => 'entity_pet_owner',
-    'entity class' => 'Entity',
+    'entity class' => 'PetOwnerEntity',
 //    'controller class' => 'PetOwnerEntityController',
     'controller class' => 'EntityAPIControllerExportable',
     'exportable' => TRUE,
+    'access callback' => 'entity_pet_owner_access_callback',
+    'uri callback' => 'entity_class_uri',
+    'admin ui' => array(
+      'path' => 'admin/entity_pet_owner',
+      'controller class' => 'EntityDefaultUIController',
+      'file' => 'entity_pet_owner.forms.inc',
+    ),
+    'fieldable' => TRUE,
+    'bundles' => array(
+      'pet_owner' => array(
+        'label' => t('Pet Owner'),
+        'admin' => array(
+          'path' => 'admin/entity_pet_owner',
+        ),
+      ),
+    ),
+    'views controller class' => 'EntityDefaultViewsController',
   );
 
   return $info;
@@ -66,7 +105,13 @@ class PetOwnerEntityController extends EntityAPIController {
     $build['first_name'] = array(
       '#type' => 'markup',
       '#markup' => check_plain($entity->first_name),
-      '#prefix' => '<div class="pet_owner-name">',
+      '#prefix' => '<div class="pet_owner-name"> First Name: ',
+      '#suffix' => '</div>',
+    );
+    $build['last_name'] = array(
+      '#type' => 'markup',
+      '#markup' => check_plain($entity->last_name),
+      '#prefix' => '<div class="pet_owner-lname"> Last Name: ',
       '#suffix' => '</div>',
     );
     $build['birthday_timestamp'] = array(
@@ -79,3 +124,38 @@ class PetOwnerEntityController extends EntityAPIController {
 
   }
 }
+
+/**
+ * Pet owner entity class extending the Entity class
+ */
+class PetOwnerEntity extends Entity {
+
+  /**
+   * Change the default URI from default/id to project/id
+   */
+  protected function defaultUri() {
+    return array('path' => 'entity_pet_owner/' . $this->identifier());
+  }
+
+}
+
+/**
+ * Access callback for pet owner entities.
+ */
+function entity_pet_owner_access_callback($op, $pet_owner = NULL, $account = NULL) {
+  if ($op == 'view' || $op == 'update' || $op == 'create' || $op == 'delete') {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+
+/**
+ * Access callback: determines access to a product's translation tab.
+ */
+function entity_pet_owner_translation_tab_access($entity) {
+  return entity_translation_tab_access('pet_owner', $entity);
+}
+

@@ -1,0 +1,81 @@
+<?php
+/**
+ * Implements hook_schema
+ */
+function entity_pet_owner_schema() {
+  $schema['entity_pet_owner'] = array(
+    'description' => "Table for pets owners",
+    'fields' => array(
+      'id' => array(
+        'description' => "Pets owner's ID",
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'first_name' => array(
+        'description' => "Pets owner's first name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'last_name' => array(
+        'description' => "Pets owner's last name",
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+      'email' => array(
+        'description' => "Pets owner's email",
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+      ),
+      'city' => [
+        'type' => 'varchar',
+        'description' => "Pets owner's city",
+        'length' => 20,
+        'not null' => FALSE,
+      ],
+      'birthday_timestamp' => [
+        'type' => 'int',
+        'size' => 'big',
+        'description' => "Pets owner's birthday Timestamp",
+        'unsigned' => FALSE,
+        'not null' => TRUE,
+      ],
+      'pet' => [
+        'type' => 'varchar',
+        'description' => "Pet category",
+        'length' => 20,
+        'not null' => TRUE,
+      ],
+      'language' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'default' => 'en',
+        'not null' => FALSE,
+      ],
+      //to make it exportable
+      'status' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        // Set the default to ENTITY_CUSTOM without using the constant as it is
+        // not safe to use it at this point.
+        'default' => 0x01,
+        'size' => 'tiny',
+        'description' => 'The exportable status of the entity.',
+      ),
+      'module' => array(
+        'description' => 'The name of the providing module if the entity has been defined in code.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+    ),
+    'unique keys' => array(
+      'email' => array('email')
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}
+
